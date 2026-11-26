@@ -1,15 +1,24 @@
-"""Draw the 17 × 17, 17 × 18 and 18 × 18 extremal matrices side by side as chain.svg."""
+"""Draw the extremal matrices from 17 × 17 to 19 × 19 side by side as chain.svg.
+
+Where a witness is an earlier matrix plus one line, that line is outlined.
+"""
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+# (witness, rows, columns, caption lines, earlier matrix it extends or None)
 PANELS = [
-    ('z17-k33/witness-138-six.txt', 17, 17, 'previously ≤ 141'),
-    ('z17x18-k33/witness-143.txt', 17, 18, 'previously ≤ 148 · 138 square + one column'),
-    ('z18-k33/witness-150.txt', 18, 18, 'previously ≤ 156'),
+    ('z17-k33/witness-138-six.txt', 17, 17, ['previously ≤ 141'], None),
+    ('z17x18-k33/witness-143.txt', 17, 18, ['previously ≤ 148', '138 square + one column'],
+     'z17-k33/witness-138-six.txt'),
+    ('z18-k33/witness-150.txt', 18, 18, ['previously ≤ 156'], None),
+    ('z18x19-k33/witness-156.txt', 18, 19, ['150 square + one column'], 'z18-k33/witness-150.txt'),
+    ('z19-k33/witness-164.txt', 19, 19, ['second 156 rectangle', '+ one row'],
+     'z18x19-k33/witness-156-min8.txt'),
 ]
-CELL, GAP = 12, 2
+CELL, GAP = 10, 2
 PITCH = CELL + GAP
-MARGIN, BETWEEN, TOP = 8, 44, 52
+MARGIN, BETWEEN, TOP = 8, 36, 64
+ROWS = max(m for _, m, _, _, _ in PANELS)
 
 STYLE = """
   text { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
@@ -28,54 +37,70 @@ STYLE = """
 """
 
 
-def read(name, m, n):
-    # Same format check as the verifiers: m lines of n characters 0 or 1.
+def read(name, m=None, n=None):
+    # Same format check as the verifiers: lines of equal length made of 0 and 1.
     rows = (ROOT / name).read_text().splitlines()
+    m = m or len(rows)
+    n = n or len(rows[0])
     if not (len(rows) == m and all(len(r) == n and set(r) <= {'0', '1'} for r in rows)):
         raise ValueError(f'{name} is not a {m} by {n} matrix of 0s and 1s')
     return rows
 
 
-def extra_column(small, large):
-    """Index of the column of `large` whose removal gives `small`, if any."""
-    for j in range(len(large[0])):
-        if [r[:j] + r[j + 1:] for r in large] == small:
-            return j
+def extra_line(small, large):
+    """('column', j) or ('row', i) if deleting that line of `large` gives `small`."""
+    if len(small) == len(large):
+        for j in range(len(large[0])):
+            if [r[:j] + r[j + 1:] for r in large] == small:
+                return 'column', j
+    if len(small) + 1 == len(large):
+        for i in range(len(large)):
+            if large[:i] + large[i + 1:] == small:
+                return 'row', i
     return None
 
 
-def panel(rows, x0, title, subtitle, marked):
-    out = [f'<text class="title" x="{x0}" y="{MARGIN + 15}">{title}</text>',
-           f'<text class="sub" x="{x0}" y="{MARGIN + 33}">{subtitle}</text>']
+def panel(rows, x0, title, lines, marked):
+    out = [f'<text class="title" x="{x0}" y="{MARGIN + 15}">{title}</text>']
+    for k, line in enumerate(lines):
+        out.append(f'<text class="sub" x="{x0}" y="{MARGIN + 33 + 14 * k}">{line}</text>')
     for i, row in enumerate(rows):
         for j, bit in enumerate(row):
             cls = 'one' if bit == '1' else 'zero'
             out.append(f'<rect class="{cls}" x="{x0 + j * PITCH}" y="{TOP + i * PITCH}" '
                        f'width="{CELL}" height="{CELL}" rx="2"/>')
-    if marked is not None:
-        out.append(f'<rect class="mark" x="{x0 + marked * PITCH - 2.5}" y="{TOP - 2.5}" '
-                   f'width="{CELL + 5}" height="{len(rows) * PITCH - GAP + 5}" rx="3"/>')
+    if marked:
+        kind, k = marked
+        if kind == 'column':
+            x, y, w, h = x0 + k * PITCH, TOP, CELL, len(rows) * PITCH - GAP
+        else:
+            x, y, w, h = x0, TOP + k * PITCH, len(rows[0]) * PITCH - GAP, CELL
+        out.append(f'<rect class="mark" x="{x - 2.5}" y="{y - 2.5}" '
+                   f'width="{w + 5}" height="{h + 5}" rx="3"/>')
     return out
 
 
 def main():
-    matrices = [read(name, m, n) for name, m, n, _ in PANELS]
-    marked = [None, extra_column(matrices[0], matrices[1]), None]
-    if marked[1] is None:
-        raise ValueError('the 17 by 18 witness is not the 17 by 17 witness plus a column')
     body, x = [], MARGIN
-    for rows, (_, m, n, prev), mark in zip(matrices, PANELS, marked):
+    for name, m, n, lines, base in PANELS:
+        rows = read(name, m, n)
+        marked = None
+        if base:
+            marked = extra_line(read(base), rows)
+            if marked is None:
+                raise ValueError(f'{name} is not {base} plus one line')
         ones = sum(r.count('1') for r in rows)
-        body += panel(rows, x, f'{m} × {n} = {ones}', prev, mark)
-        x += max(n * PITCH - GAP, 7 * len(prev)) + BETWEEN
+        body += panel(rows, x, f'{m} × {n} = {ones}', lines, marked)
+        x += n * PITCH - GAP + BETWEEN
     width = x - BETWEEN + MARGIN
-    height = TOP + 18 * PITCH - GAP + MARGIN
+    height = TOP + ROWS * PITCH - GAP + MARGIN
     svg = '\n'.join([
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
         f'viewBox="0 0 {width} {height}" role="img" aria-labelledby="t">',
         '<title id="t">Extremal binary matrices with no all-ones 3 by 3 submatrix: '
-        '17 by 17 with 138 ones, 17 by 18 with 143 ones, which is the first matrix plus '
-        'one outlined column, and 18 by 18 with 150 ones.</title>',
+        '17 by 17 with 138 ones; 17 by 18 with 143, the first matrix plus an outlined column; '
+        '18 by 18 with 150; 18 by 19 with 156, the 150-one square plus an outlined column; '
+        'and 19 by 19 with 164, a second 156-one rectangle plus an outlined row.</title>',
         f'<style>{STYLE}</style>',
         *body,
         '</svg>',

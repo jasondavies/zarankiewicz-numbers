@@ -18,7 +18,7 @@ The Zarankiewicz number $z(m,n;s,t)$ is the largest number of ones in an $m \tim
 
 Before this work the best published upper bounds for 17 × 17, 17 × 18 and 18 × 18 were 141, 148 and 156 ([Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf)). The 17 × 18 proof uses the 17 × 17 value, the 18 × 18 proof uses the 17 × 18 value, and the 18 × 19 proof uses both of those. The 19 × 19 bound then follows from the 18 × 19 value by deleting rows. The 17 × 17 value also gives a short proof that the bipartite Ramsey number $b(2,2,3)$ is 17, first proved by [Rowshan and Gholami](https://arxiv.org/abs/2108.03572).
 
-![Extremal matrices for 17 × 17, 17 × 18 and 18 × 18 with 138, 143 and 150 ones; the 17 × 18 matrix is the 17 × 17 matrix plus one outlined column](figures/chain.svg)
+![Extremal matrices from 17 × 17 to 19 × 19 with 138, 143, 150, 156 and 164 ones; outlines mark the column or row added to an earlier matrix](figures/chain.svg)
 
 ## OEIS
 
