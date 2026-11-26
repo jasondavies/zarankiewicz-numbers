@@ -1,4 +1,4 @@
-// Enumerate seventeen blocks on ten points with total size >=70 and loads 7..9.
+// Enumerate seventeen blocks on ten points with total size >=70 and minimum load seven.
 #include "../z16x18-k33/block_families.hpp"
 #include <array>
 #include <iostream>
@@ -8,11 +8,12 @@
 using Loads = std::array<int,10>;
 std::array<Blocks,6> by_size;
 std::set<Blocks> answers;
+int maximum_load = 9;
 
 void tails(Blocks& base, const Blocks& pool, size_t start, int weight, Loads loads) {
     int left = 17 - base.size();
     if (weight + 3 * left < 70) return;
-    for (int d : loads) if (d > 9 || d + left < 7) return;
+    for (int d : loads) if (d > maximum_load || d + left < 7) return;
     if (!left) {
         answers.insert(canonical_blocks(10,base));
         return;
@@ -32,7 +33,7 @@ void tails(Blocks& base, const Blocks& pool, size_t start, int weight, Loads loa
 void fours(Blocks& base, const Blocks& pool, int need, int weight, const Loads& loads) {
     if (int(pool.size()) < need) return;
     int remaining = 17 - base.size();
-    for (int d : loads) if (d > 9 || d + remaining < 7) return;
+    for (int d : loads) if (d > maximum_load || d + remaining < 7) return;
     if (!need) {
         Blocks small;
         if (remaining)
@@ -62,7 +63,7 @@ void explore(const Blocks& fives) {
         marked.push_back(1u<<point);
         level.insert(canonical_blocks(10,marked));
     }
-    for (int p=0; p<=9 && !level.empty(); ++p) {
+    for (int p=0; p<=maximum_load && !level.empty(); ++p) {
         std::set<Blocks> next;
         for (const auto& state : level) {
             Blocks base=state;
@@ -72,11 +73,11 @@ void explore(const Blocks& fives) {
             Blocks off;
             Loads loads{};
             for (unsigned b : base) for (int j=0; j<10; ++j) loads[j] += b >> j & 1u;
-            if (*std::max_element(loads.begin(),loads.end())>9) continue;
+            if (*std::max_element(loads.begin(),loads.end())>maximum_load) continue;
             for (unsigned b : by_size[4]) {
                 if (!fits(b,base)) continue;
                 if (!(b & pivot)) off.push_back(b);
-                else if (p<9 && p<qmax) {
+                else if (p<maximum_load && p<qmax) {
                     Blocks child=state;
                     child.push_back(b);
                     next.insert(canonical_blocks(10,child));
@@ -91,7 +92,9 @@ void explore(const Blocks& fives) {
     }
 }
 
-int main() {
+int main(int argc, char** argv) {
+    if (argc == 2) maximum_load = std::stoi(argv[1]);
+    if (argc > 2 || maximum_load < 7 || maximum_load > 17) return 2;
     for (unsigned b=0; b<1024; ++b) if (std::popcount(b)<=5) by_size[std::popcount(b)].push_back(b);
     std::string line;
     while (std::getline(std::cin,line)) {
