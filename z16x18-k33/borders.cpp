@@ -76,8 +76,37 @@ bool choose(Lines& fixed, const Lines& pool, int left, int target, int floor) {
     return false;
 }
 
+// Necessary test on the total excess above a weight threshold. Cheap rows
+// cannot help achieve this excess and never enter this part of the search.
+bool can_gain(Lines& fixed, const Lines& pool, int slots, int gap, int baseline) {
+    if (gap <= 0) return true;
+    if (!slots) return false;
+    for (size_t i = 0; i < pool.size(); ++i) {
+        int upper=0;
+        for (size_t j=i; j<pool.size() && j<i+slots; ++j)
+            upper += std::popcount(pool[j])-baseline;
+        if (upper<gap) break;
+        Mask a=pool[i];
+        int gain=std::popcount(a)-baseline;
+        if (gain>=gap) return true;
+        Lines next;
+        for (size_t j=i+1; j<pool.size(); ++j) {
+            Mask both=a&pool[j];
+            if (std::none_of(fixed.begin(),fixed.end(),[both](Mask b) {
+                    return std::popcount(b&both)>2;
+                })) next.push_back(pool[j]);
+        }
+        fixed.push_back(a);
+        bool ok=can_gain(fixed,next,slots-1,gap-gain,baseline);
+        fixed.pop_back();
+        if (ok) return true;
+    }
+    return false;
+}
 int main(int argc, char** argv) {
-    if (argc != 8) return 2;
+    if (argc != 8 && argc != 9) return 2;
+    const bool gain_pruning = argc == 9;
+    if (gain_pruning && std::string(argv[8]) != "--gain") return 2;
     const std::string side = argv[1];
     const bool outside = side == "outside";
     if (!outside && side != "inside") return 2;
@@ -126,11 +155,16 @@ int main(int argc, char** argv) {
             auto test = fixed;
             if (!choose(test, pool, heavy, heavy*peak, peak)) continue;
         }
+        bool feasible=true;
         for (int d = peak-1; d >= std::max(low,target-(extra-1)*peak); --d) {
+            if (gain_pruning && d>=7 && target-extra*d >= 3 && !can_gain(fixed,pool,extra,target-extra*d,d)) {
+                feasible=false;
+                break;
+            }
             auto more = layers[d-low].allowed(pairs, outside ? marker : 0u);
             pool.insert(pool.end(), more.begin(), more.end());
         }
-        if (choose(fixed, pool, extra, target, low)) {
+        if (feasible && choose(fixed, pool, extra, target, low)) {
             std::cout << "completion";
             for (auto b : fixed) std::cout << ' ' << b;
             std::cout << '\n';

@@ -1,6 +1,6 @@
 # What a 144-one matrix would have to look like
 
-**Its maximum column degree is exactly nine. Every pair of columns shares at most five rows.** This leaves one marked-column family to investigate for the exact value.
+**Its maximum column degree is exactly nine. Every pair of columns shares at most five rows.** The [final search](final-search.md) exhausts the remaining marked-column family.
 
 Every row has degree at least seven by the 16 × 18 upper bound of 137, and every column has degree at least six by the 17 × 17 upper bound of 138. At most four rows have degree seven, since deleting five sevens would leave 109 ones on 12 × 18. The ceilings used for smaller rectangles are listed in [Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf).
 
@@ -12,7 +12,7 @@ If two columns share six rows, those rows have at least $4\cdot7+2\cdot8=44$ one
 
 ## Large marked columns
 
-Mark a column of degree $t$. As in the [145 proof](README.md), let $S$ be the number of ones the marked rows have on the seventeen other columns. Each projected block has size at most five, except possibly one six-block. Thus $7t-4\le S\le86$, and $t\le12$.
+Mark a column of degree $t$. As in the [145 proof](weight-145.md), let $S$ be the number of ones the marked rows have on the seventeen other columns. Each projected block has size at most five, except possibly one six-block. Thus $7t-4\le S\le86$, and $t\le12$.
 
 - **Twelve.** At most twelve five-blocks fit on twelve points, by the pencil argument in the 145 proof. Hence $S\le4\cdot17+12+2=82$. The five outside rows contain at least 50 ones and each has degree at least seven. Their 310 projections have no completion.
 - **Eleven, without a six-block.** The six outside rows have at most 58 ones. Thus $S\ge75$. The marked side has point loads at least six, with at most four units of total deficit below seven. All 10,577 generated projections fail the border check.

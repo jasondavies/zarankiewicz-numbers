@@ -1,36 +1,23 @@
-# The 17 × 18 case for an all-ones 3 × 3
+# The 17 × 18 Zarankiewicz number for $K_{3,3}$ is 143
 
-**The bounds are $143\le z(17,18;3,3)\le144$.** The marked-column search excludes 145 ones. The lower construction has 143 ones. Append a column supported on rows **3, 5, 6, 15, 17** (one-based) of the 138-one square with a six-one row. The witness checker verifies every triple of rows directly. [143-one witness](witness-143.txt) · [Original square](../z17-k33/witness-138-six.txt)
+A 17 × 18 binary matrix can have **143 ones** while avoiding an all-ones 3 × 3 submatrix. Every 17 × 18 matrix with 144 or more ones contains such a submatrix. Rows and columns may be chosen anywhere in the matrix.
 
-The preceding ceiling was 145. At weight 146 some row has at most eight ones and deleting it contradicts the 16 × 18 maximum of 137. At weight 145, every row has at least eight ones, at least eight rows have exactly eight, and deletion of any one of these gives an extremal 137-one core. We test all possible extensions by choosing a marked column in the putative larger matrix. This avoids enumerating extremal cores with a row of weight below eight. [Wei’s earlier bounds](https://doi.org/10.5281/zenodo.24553293) · [Independent 16 × 18 proof](../z16x18-k33/README.md)
+**Construction.** Append a column supported on rows **3, 5, 6, 15, 17** (numbered from one) of the 138-one square with a six-one row. The resulting matrix has 143 ones. The verifier checks that none of its 680 triples of rows has more than two common columns. [143-one witness](witness-143.txt) · [Original square](../z17-k33/witness-138-six.txt)
 
-## Mark a column of maximum degree
+**Upper bound.** It suffices to exclude weight 144, because erasing ones preserves avoidance. Deleting a row or column and applying the known neighbouring bounds forces every row to have at least seven ones and every column to have at least six. The first part of the proof shows that a counterexample would have a column of degree nine, no larger column, and no two columns sharing more than five rows. Marking the nine-column splits the rows into nine meeting it and eight avoiding it. Enumerating the denser side of this split gives four cases and 23,029,030 projections in total. None can be completed to 144 ones. [Degree reductions](weight-144.md) · [Final enumeration and counts](final-search.md)
 
-Some column has degree $t\ge9$ because $145>18\cdot8$. Two columns cannot share six rows. Those rows would have at least 48 ones, but two columns supply twelve and every other column supplies at most two. The seventeen other columns thus restrict to blocks of size at most five on the $t$ marked rows. Two blocks intersect in at most two points. Write $S$ for their total size. Each point has load at least seven, so $7t\le S\le85$ and $t\le12$. The $17-t$ rows outside the marked column have $145-t-S$ ones on the remaining seventeen columns.
+The starting ceiling of 145 follows from Jiuzeng Wei’s exact 16 × 18 value of 137. We also checked weight 145 directly. That calculation can be replayed separately and supplies the twelve-point block lemma used in the 144 proof. [Wei’s archive](https://doi.org/10.5281/zenodo.24553293) · [Independent 16 × 18 proof](../z16x18-k33/README.md) · [145-one calculation](weight-145.md)
 
-- **Twelve.** The five outside rows contain at most 52 ones. At 53 ones, distributing them evenly among seventeen columns would already cover $15\binom33+2\binom43=23$ row triples with multiplicity, against a capacity of $2\binom53=20$. Thus $S\ge81$, requiring at least thirteen five-blocks. The pencil argument below excludes thirteen.
-- **Eleven.** Six outside rows contain at most 58 ones, so $S\ge76$. Enumerating compatible families of fives, then their compatible fours, gives no such projection with every load at least seven. [Six-row ceiling, Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf)
-- **Ten.** If $S\ge71$, the same enumeration yields 24 projections with the required loads. For $S\le70$, the seven outside rows contain at least 65 ones. There are 1,096 outside projections up to isomorphism with all seven degrees at least eight.
-- **Nine.** If $S\ge65$, enumerate the marked side on nine points. There are 87,842 projections with every point load at least seven. If $S\le64$, enumerate instead the eight outside rows, which have 72 or 73 ones. The upper limit follows from $S\ge63$. Delete a minimum outside row, of degree eight or nine. At degree eight the seven-row remainder has at least 64 ones and minimum row degree eight. At degree nine it has at least 63 ones and minimum degree nine. Generate each seven-row family, then try all legal supports of the deleted row. For a triple of columns already covered twice, selecting two makes the third forbidden. Among columns with identical seven-row traces it suffices to select an initial segment. Canonicalizing the eight-row results yields 81,345 projections in the first case and 824 in the second. None extends.
+As a consequence, $z(18,18;3,3)\le151$. An 18 × 18 matrix of weight 152 has a row of weight at most eight. Deleting it would leave at least 144 ones in 17 × 18.
 
-The exhaustive border counts are 24 and 1,096 for a ten-column, and 87,842, 81,345 and 824 for a nine-column. All five return zero. A higher-weight matrix would yield a 145-one matrix by erasing entries.
+[Download the proof with its witness matrix (PDF).](z17x18-exact.pdf)
 
-## Why thirteen five-blocks on twelve points are impossible
+## Replay
 
-Thirteen blocks give 65 incidences, so some point belongs to at least six blocks. It cannot belong to seven. Deleting it from seven blocks would give seven four-sets on eleven points, any two intersecting at most once. Balancing 28 incidences over the eleven points already requires 23 intersections, exceeding the 21 pairs of blocks.
-
-Deleting that point from its six blocks leaves six four-sets with 24 incidences. The minimum possible number of intersections is 15, exactly the number of block pairs. Thus nine points occur twice, two occur three times, and each pair of blocks meets once. Each block meets its five partners at four points, so it contains exactly one point of multiplicity three. The two triple points partition the six blocks into groups of three. The nine double points correspond to the nine cross-group pairs. This determines the six original blocks up to isomorphism. Of the 51 further five-sets compatible with them and avoiding the distinguished point, no seven are pairwise compatible. The replay checks this clique assertion directly.
-
-## Completing a projection
-
-The fixed side specifies complete rows on seventeen coordinates, together with their marked-column entry. Missing rows contain the marked column exactly in the outside case. Each candidate must make legal triples with every two fixed rows, and selecting it imposes the same check on all later choices. Repeated missing rows are impossible at weight 145. Identical rows of degree at least eight would cover seven columns, whose degrees sum to at least 49 by the 17 × 17 maximum of 138. Two covering rows and the other fifteen could supply at most $14+2\cdot15=44$ ones there. [Square bound](../z17-k33/README.md)
-
-For ten and eleven points, [the five-block generator](fives.cpp) constructs each family by appending another legal five-set and canonicalizing the bipartite incidence graph with a distinguished point shore. It retains the relabelled list of blocks. If $m$ five-sets and $q$ four-sets occur, $S\le51+2m+q$; this determines the smallest four-set clique to enumerate. The replay then tries all compatible smaller blocks, allowing repetition at sizes zero through two. The outside generator and the border search are shared with the independent 16 × 18 proof.
-
-To reproduce the calculation from this directory, use Python 3.10+, a C++20 compiler, and nauty.
+Use Python 3.10+, a C++20 compiler named `c++`, and the nauty development library and headers. From this directory run
 
 ```sh
-python3 verify.py --jobs 4
+python3 verify_exact.py --jobs 4
 ```
 
-At weight 144 a second reduction leaves only maximum column degree nine, with every pair of columns sharing at most five rows. [Proof and replay](weight-144.md)
+This checks the witness, regenerates the degree exclusions and final catalogues, and checks every completion. The search uses the smaller-grid bounds cited in the proof, including the [17 × 17 maximum of 138](../z17-k33/README.md). The checker also reconstructs a valid 143-one matrix from each side of the supplied witness as a positive control. The job count controls parallel border checks. The largest catalogue contains over twelve million projections and requires several gigabytes of memory during generation.
