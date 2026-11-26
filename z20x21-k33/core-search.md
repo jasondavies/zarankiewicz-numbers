@@ -1,6 +1,6 @@
 # Reductions at weight 187 on 20 × 21
 
-A weight-187 matrix has at most one eight-one row. Its columns have degrees eight, nine and ten. If there are $q$ columns of degree eight, the counts at the three degrees are $(q,23-2q,q-2)$ with $4\le q\le7$. Every row meets at most eight of the columns of degree nine or ten. The four remaining column profiles are $(4,15,2)$, $(5,13,3)$, $(6,11,4)$ and $(7,9,5)$.
+A weight-187 matrix has at most one eight-one row. Its columns have degrees eight, nine and ten. If there are $q$ columns of degree eight, the counts at the three degrees are $(q,23-2q,q-2)$ with $4\le q\le7$. Every row meets at most eight of the columns of degree nine or ten. The separate two-column enumeration excludes $q=4$, leaving $(5,13,3)$, $(6,11,4)$ and $(7,9,5)$. [Four-eight exclusion](four-eights.md)
 
 ## The 18 × 20 and 18 × 21 bounds
 
@@ -30,7 +30,7 @@ All cases at $q=9,10,11$ fail. At $q=8$ the only survivors $(s,h,L)$ are $(0,7,3
 
 No pair of columns of this submatrix can share five rows. Five rows need at least 35 entries, whereas two covering columns and the other eleven provide at most $10+11\cdot2=32$. On the support of any column, the twelve other columns therefore give blocks of size at most four. The marked rows each have at least six entries outside the mark, forcing marked degree at most eight. A column of degree eight forces twelve four-blocks of total 48. There is one canonical projection, and it cannot accept the other four rows at weight 85. Distinct missing rows suffice, as a pair sharing seven columns allows only $14+10\cdot2=34$ entries there and the other six columns have at most 48. If all column degrees are at most seven, at least seven columns have degree seven, since the total is 85. The eight-row meets one of them. Mark it to obtain twelve blocks on seven points with point loads at least six and total 43. The catalogue is empty. This excludes $q=8$.
 
-## The first remaining profile has four eights, fifteen nines and two tens
+## Reducing the profile with four eights, fifteen nines and two tens
 
 Delete the four eight-columns. The resulting 20 × 17 matrix has weight 155. For row $i$ let $d_i$ be its heavy degree and $u_i=8-d_i$. The deficits are nonnegative and sum to five. A row of full degree eight avoids every eight-column, since deleting an incident eight-row and eight-column would leave 172 on 19 × 20. A row of full degree nine meets at most two eight-columns, since deleting three that it meets, and then the row, would leave 157 on 19 × 18. Every other row retains at least six entries. Consequently $0\le u_i\le2$. [19 × 20 result](../z19x20-k33/README.md)
 

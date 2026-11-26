@@ -20,7 +20,7 @@ Mark the ten columns of the chosen ten-row. Its twenty blocks have point loads e
 
 This excludes 196 unconditionally. At 195 some line has degree eight, since degree seven would leave 188 after deletion. Deleting it gives exactly 187 on 20 × 21. At 194 a line of degree at most eight leaves at least 186. Hence if the rectangular maximum is 185 then the square maximum is exactly 193.
 
-At 195 there are at most two eight-rows and at most two eight-columns. Indeed, deleting three eight-lines on the same side would leave 171 entries on 18 × 21, above its upper bound of 170. Deleting any one eight-line must give one of the four surviving rectangular column profiles, with the rectangle oriented as 20 × 21. [Core bounds and profiles](../z20x21-k33/core-search.md)
+At 195 there are at most two eight-rows and at most two eight-columns. Indeed, deleting three eight-lines on the same side would leave 171 entries on 18 × 21, above its upper bound of 170. Deleting any one eight-line must give one of the three surviving rectangular column profiles, with the rectangle oriented as 20 × 21. [Core bounds and profiles](../z20x21-k33/core-search.md) · [Four-eight exclusion](../z20x21-k33/four-eights.md)
 
 ## Replay
 
