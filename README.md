@@ -28,8 +28,9 @@ Before this work the best published upper bounds for 17 × 17, 17 × 18 and 18 �
 |---|---:|---:|---|
 | 18 × 20 | 162 | 163 | [Deletion witness and marked-row proof](z20x21-k33/core-search.md) |
 | 18 × 21 | 168 | 170 | [Upper bound](z20x21-k33/core-search.md) and deletion of the three smallest rows from the [193-one square](z21-k33/witness-193.txt) |
+| 19 × 21 | 177 | 178 | [Deletion witness and exclusion of 179](z20x21-k33/weight-186.md) |
 | 20 × 21 | 185 | 186 | [Witness and proof](z20x21-k33), including a census of the extremal 20 × 20 squares and the [exclusion of 187](z20x21-k33/rare-rows.md) |
-| 21 × 21 | 193 | 194 | [Witness and proof](z21-k33), including the reduction of weight 194 to the rectangular problem |
+| 21 × 21 | 193 | 194 | [Witness and proof](z21-k33), including the [reduction of 194 to a two-row extension of 178 on 19 × 21](z20x21-k33/weight-186.md) |
 
 ## OEIS
 

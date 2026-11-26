@@ -2,6 +2,8 @@
 
 **The remaining values are 193 and 194.** The witness has two lines of degree eight, thirteen of degree nine and six of degree ten on each side. Every triple of rows and every triple of columns has at most two common entries. Removing the first row gives the 185-one rectangle. [193-one matrix](witness-193.txt) · [20 × 21 bounds](../z20x21-k33/README.md)
 
+Every 194-one square has two parallel lines of degree eight. After transposing if necessary, their deletion leaves 178 on 19 × 21. Conversely, adding two jointly compatible eight-rows to any such 178-one matrix gives 194. [Reduction and extension checker](../z20x21-k33/weight-186.md)
+
 ## Upper bound and reduction to the rectangle
 
 Deleting each row in turn gives $20w\le21\cdot187$, so $w\le196$. At 196 every row and column must have degree at least nine, since deleting one with degree at most eight would leave at least 188 on 20 × 21. We now exclude weights 194, 195 and 196 under the common hypothesis that every line has degree at least nine.

@@ -2,6 +2,8 @@
 
 **The remaining values are 185 and 186.** Removing an eight-one row from the 193-one square gives the lower bound. Weights 188 and 187 are excluded. We also classify the extremal 20 × 20 squares. [Exclusion of 187](rare-rows.md) · [185-one matrix](witness-185.txt) · [193-one square](../z21-k33/README.md)
 
+Every 186-one rectangle has an eight-row and at least four columns of degree below nine. Deleting the eight-row leaves a 178-one matrix on 19 × 21. [Restrictions at 186 and replay](weight-186.md)
+
 ## Excluding 188
 
 Assume a 188-one matrix exists. Any heavier example can be reduced to that weight. Every column has degree at least eight since the 20 × 20 maximum is 180. At least one column has degree eight by averaging. Deleting it leaves an extremal square, with nine ones in every row and column. [20 × 20 result](../z20-k33/README.md)

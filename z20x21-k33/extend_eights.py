@@ -13,17 +13,20 @@ def admissible(lines):
     return all((a & b & c).bit_count() <= 2 for a, b, c in combinations(lines, 3))
 
 
-def extend(rows):
+def legal_supports(lines, width, weight):
+    pairs = sorted({a & b for a, b in combinations(lines, 2) if (a & b).bit_count() >= 3},
+                   key=int.bit_count, reverse=True)
+    for points in combinations(range(width), weight):
+        support = sum(1 << i for i in points)
+        if all((support & pair).bit_count() <= 2 for pair in pairs):
+            yield support
+
+
+def extend(rows, weight=8):
     if len(rows) != 20 or any(r < 0 or r >= 1 << 18 for r in rows) or not admissible(rows):
         raise ValueError('expected a K3,3-free 20 by 18 matrix')
     columns = transpose(rows, 18)
-    pairs = sorted({a & b for a, b in combinations(columns, 2) if (a & b).bit_count() >= 3},
-                   key=int.bit_count, reverse=True)
-    candidates = []
-    for points in combinations(range(20), 8):
-        support = sum(1 << i for i in points)
-        if all((support & p).bit_count() <= 2 for p in pairs):
-            candidates.append(support)
+    candidates = list(legal_supports(columns, 20, weight))
     for i, a in enumerate(candidates):
         # Allow repeated supports in case the input core is sparse.
         neighbors = [b for b in candidates[i:] if all((a & b & c).bit_count() <= 2 for c in columns)]
