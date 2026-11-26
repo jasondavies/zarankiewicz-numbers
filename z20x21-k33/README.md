@@ -1,6 +1,6 @@
 # Bounds for the 20 × 21 Zarankiewicz number for K₃,₃
 
-**The remaining values are 185, 186 and 187.** Removing an eight-one row from the 193-one square gives the lower bound. We also classify the extremal 20 × 20 squares and restrict the possible column degrees at 187. [185-one matrix](witness-185.txt) · [193-one square](../z21-k33/README.md)
+**The remaining values are 185 and 186.** Removing an eight-one row from the 193-one square gives the lower bound. Weights 188 and 187 are excluded. We also classify the extremal 20 × 20 squares. [Exclusion of 187](rare-rows.md) · [185-one matrix](witness-185.txt) · [193-one square](../z21-k33/README.md)
 
 ## Excluding 188
 
@@ -32,11 +32,18 @@ An alternative starting point for the 187 search is to delete **three** eight-co
 
 The core search and the exclusion of the four-eight case leave three column profiles at 187. The number of eight-columns is five, six or seven, every other column has degree nine or ten, and at most one row has degree eight. After deleting any three eight-columns, the 163-one core must have between one and six seven-rows. [Core bounds and profile restrictions](core-search.md) · [Four-eight exclusion and replay](four-eights.md)
 
+## Excluding 187
+
+A row's columns, with the other nineteen rows as blocks, form a projection whose loads are the column degrees minus one. Small catalogues bound how many ten-columns a row can meet in terms of its eight-columns. Summing over rows against the column profile forces a rare row: a nine-row meeting more ten-columns than eight-columns, or a ten-row meeting four eight-columns and three ten-columns. There are 1,221 such projections, and none completes to 187. This covers every column profile at once, including the four-eight case. [Proof and replay](rare-rows.md)
+
 ## Replay
 
-The first command checks the bounds and the weight-187 restrictions. The second also enumerates all extremal 20 × 20 squares. Both use Python 3.10+, C++20 and nauty.
+The first command checks the bounds and the weight-187 restrictions. The second also enumerates all extremal 20 × 20 squares. All use Python 3.10+, C++20 and nauty.
 
 ```sh
 python3 verify_bounds.py
 python3 verify_bounds.py --census --jobs 8
+python3 verify_rare_rows.py --jobs 8
 ```
+
+The last command excludes 187. It relies on the restrictions replayed by `verify_core_bounds.py --full`.

@@ -3,7 +3,7 @@
 #include <array>
 #include <iostream>
 
-constexpr int max_points = 10;
+constexpr int max_points = 12;
 
 int main(int argc, char **argv) {
     if (argc != 3 && argc != 5)

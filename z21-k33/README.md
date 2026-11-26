@@ -1,6 +1,6 @@
 # Bounds for the 21 × 21 Zarankiewicz number for K₃,₃
 
-**The remaining values are 193, 194 and 195.** The witness has two lines of degree eight, thirteen of degree nine and six of degree ten on each side. Every triple of rows and every triple of columns has at most two common entries. Removing the first row gives the 185-one rectangle. [193-one matrix](witness-193.txt) · [20 × 21 bounds](../z20x21-k33/README.md)
+**The remaining values are 193 and 194.** The witness has two lines of degree eight, thirteen of degree nine and six of degree ten on each side. Every triple of rows and every triple of columns has at most two common entries. Removing the first row gives the 185-one rectangle. [193-one matrix](witness-193.txt) · [20 × 21 bounds](../z20x21-k33/README.md)
 
 ## Upper bound and reduction to the rectangle
 
@@ -18,9 +18,7 @@ Let $h=w-189$, the number of ten-rows and also of ten-columns. At 196 and 195 so
 
 Mark the ten columns of the chosen ten-row. Its twenty blocks have point loads eight or nine and total load at least 82 at weights 196 and 195, or at least 81 at weight 194. There are 149 canonical projections at threshold 82 and 5,636 at threshold 81. Completing each projection requires eleven more columns of degree nine or ten on twenty unmarked rows. The border checker excludes every completion at the corresponding weights. Repeated missing columns would violate the bound on column-pair intersections.
 
-This excludes 196 unconditionally. At 195 some line has degree eight, since degree seven would leave 188 after deletion. Deleting it gives exactly 187 on 20 × 21. At 194 a line of degree at most eight leaves at least 186. Hence if the rectangular maximum is 185 then the square maximum is exactly 193.
-
-At 195 there are at most two eight-rows and at most two eight-columns. Indeed, deleting three eight-lines on the same side would leave 171 entries on 18 × 21, above its upper bound of 170. Deleting any one eight-line must give one of the three surviving rectangular column profiles, with the rectangle oriented as 20 × 21. [Core bounds and profiles](../z20x21-k33/core-search.md) · [Four-eight exclusion](../z20x21-k33/four-eights.md)
+This excludes 196 unconditionally. At 195 some line has degree eight, since degree seven would leave 188 after deletion. Deleting it gives exactly 187 on 20 × 21, which is impossible. This excludes 195. At 194 a line of degree at most eight leaves at least 186. Hence if the rectangular maximum is 185 then the square maximum is exactly 193. [Exclusion of 187 on 20 × 21](../z20x21-k33/rare-rows.md)
 
 ## Replay
 
