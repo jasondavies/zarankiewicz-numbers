@@ -4,6 +4,8 @@ A 16 × 17 binary matrix can have **132 ones** while avoiding an all-ones 3 × 3
 
 The [proof PDF](z16x17-exact.pdf) includes the matrix. The [witness](witness-132.txt) is obtained by deleting the six-one row of the [17 × 17 construction](../z17-k33/witness-138-six.txt). The verifier checks all 380,800 choices of three rows and three columns. Afrasyab had already established the lower bound and recorded the interval from 132 to 133. A subsequent SAT search reported unresolved branches at maximum row degrees nine and ten. [Afrasyab, §3](https://arxiv.org/html/2608.08154v1) · [Earlier SAT search](https://slopdealer.com/research/papers/ml-091/)
 
+Jiuzeng Wei independently obtained the same value by degree-constrained canonical augmentation and released the result on 26 November 2026 before our local proof commit. The same release establishes $z(16,18;3,3)=137$ and $142\le z(16,19;3,3)\le143$. The proof below uses a marked row or column and tests completions of its nine-point neighbourhood. [Wei’s archived proof and data](https://doi.org/10.5281/zenodo.24553293)
+
 In the OEIS this gives a(16) = 133 in [A006621](https://oeis.org/A006621), Zarankiewicz's problem k_3(n,n+1), whose listed terms currently stop at a(12).
 
 ## Upper bound

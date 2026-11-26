@@ -24,8 +24,8 @@ bool compatible(Mask x, const Blocks& blocks) {
 // Equal keys are literally the same multiset after a permutation of the nine points.
 Blocks key(const Blocks& blocks) {
     int n = 9 + blocks.size();
-    graph g[25]{}, canonical[25]{};
-    int lab[25], partition[25], orbits[25];
+    graph g[26]{}, canonical[26]{};
+    int lab[26], partition[26], orbits[26];
     for (int i = 0; i < n; ++i) {
         lab[i] = i;
         partition[i] = (i != 8 && i != n-1);
@@ -156,9 +156,9 @@ class Catalogue {
     }
 
 public:
-    explicit Catalogue(bool column) :
-        lines(column?16:15), minimum_weight(column?62:60), deficit_limit(column?1:3),
-        minimum_load(column?6:5), maximum_load(column?16:7) {
+    Catalogue(int count, int weight, int deficit, int low, int high) :
+        lines(count), minimum_weight(weight), deficit_limit(deficit),
+        minimum_load(low), maximum_load(high) {
         for (Mask b = 0; b < 512; ++b) {
             int d = std::popcount(b);
             if (d <= 5) by_size[d].push_back(b);
@@ -190,8 +190,17 @@ public:
 };
 
 int main(int argc, char** argv) {
+    if (argc == 6) {
+        int count = std::stoi(argv[1]), weight = std::stoi(argv[2]);
+        int deficit = std::stoi(argv[3]), low = std::stoi(argv[4]), high = std::stoi(argv[5]);
+        if (count < 1 || count > 17 || weight < 0 || deficit < 0 ||
+            low < 0 || low > high || high > count) return 2;
+        Catalogue(count, weight, deficit, low, high).run();
+        return 0;
+    }
     if (argc != 2) return 2;
     const std::string mode=argv[1];
     if (mode!="column" && mode!="row") return 2;
-    Catalogue(mode=="column").run();
+    if (mode=="column") Catalogue(16,62,1,6,16).run();
+    else Catalogue(15,60,3,5,7).run();
 }
