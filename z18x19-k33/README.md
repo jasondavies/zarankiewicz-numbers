@@ -1,6 +1,8 @@
-# The 18 × 19 Zarankiewicz number for $K_{3,3}$ is 156
+# The 18 × 19 Zarankiewicz number for K₃,₃ is 156
 
 **The maximum is 156 ones.** The [156-one witness](witness-156.txt) extends the [150-one square](../z18-k33/README.md) by a column with ones in rows 1, 2, 4, 7, 16 and 18 (numbered from one). Every triple of rows has at most two common ones. A hypothetical 157-one matrix would have between two and nine columns of degree seven. The exhaustive marked-row search excludes every one of these cases. A second 156-one matrix extends to an extremal 164-one square. [Marked-row proof](marked-search.md) · [19 × 19 corollary](../z19-k33/README.md) · [Square census and two-column reduction](square-cores.md)
+
+In the OEIS this gives a(18) = 157 in [A006621](https://oeis.org/A006621), Zarankiewicz's problem k_3(n,n+1).
 
 ## Excluding 158
 
@@ -29,5 +31,7 @@ With Python 3.10+, a C++20 compiler and nauty installed, run
 ```sh
 python3 verify_exact.py --jobs 8
 ```
+
+If nauty is not on the compiler's default search paths, pass its include and library paths through `CXXFLAGS` and `LDFLAGS` as described in the [top-level README](../README.md).
 
 The driver verifies the witness, regenerates the projection catalogues and exhausts every case at 157. To replay just one case, add `--case 0` through `--case 9`. A full replay uses the 17 × 18 and 18 × 18 upper bounds proved in the adjacent directories. The [PDF](z18x19-exact.pdf) includes the witness and the proof.
