@@ -25,16 +25,16 @@ These results give new terms of the following sequences. Some sequences count th
 | [A001198](https://oeis.org/A001198) | Zarankiewicz's problem k_3(n) | a(17) = 139 | `z17-k33` |
 | [A350237](https://oeis.org/A350237) | Minimum number of 1's in an n X n binary matrix with no zero 3 X 3 submatrix | a(17) = 289 − 138 = 151 | `z17-k33` |
 | [A347473](https://oeis.org/A347473) | Maximum number of nonzero entries allowed in an n X n matrix to ensure there is a 3 X 3 zero submatrix | a(17) = 151 − 1 = 150 | `z17-k33` |
-| [A006621](https://oeis.org/A006621) | Zarankiewicz's problem k_3(n,n+1) | a(16) = 133 | `z16x17-k33` |
+| [A006621](https://oeis.org/A006621) | Zarankiewicz's problem k_3(n,n+1) | a(16) = 133, a(17) = 144 | `z16x17-k33` (first by Wei), `z17x18-k33` |
 
-The listed terms of A006621 stop at a(12), so a(13) to a(15) are needed before a(16) can be added.
+The listed terms of A006621 stop at a(12). The missing a(13) = 99, a(14) = 113 and a(15) = 124 follow from the exact values $z(13,14;3,3)=98$, $z(14,15;3,3)=112$ and $z(15,16;3,3)=123$ in [Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf).
 
 ## Layout
 
 Each result has its own directory with a README describing the files and how to replay the verification. A directory typically contains:
 
 - the witness matrices as plain text, one row per line;
-- a written proof as a typeset PDF, with its Markdown source where there is one;
+- a written proof, in the README or in Markdown files, often with a typeset PDF;
 - the verification sources and a `verify_exact.py` script that replays the whole check.
 
 The replays need Python 3.10 or newer, a C++20 compiler available as `c++`, and the nauty headers and library. If nauty is not on the compiler's default search paths, as with Homebrew on Apple Silicon, pass them through `CXXFLAGS` and `LDFLAGS`:

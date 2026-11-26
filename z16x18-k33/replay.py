@@ -3,6 +3,8 @@ from concurrent.futures import ThreadPoolExecutor
 from itertools import combinations
 from pathlib import Path
 from subprocess import run
+import os
+import shlex
 import sys
 
 HERE = Path(__file__).resolve().parent
@@ -12,7 +14,10 @@ from ten_columns import possible_fives, four_cliques
 
 def compile_cpp(source, directory, nauty=False):
     binary = directory / source.stem
-    args = ['c++', '-std=c++20', '-O3', '-march=native', str(source), '-o', str(binary)]
+    # CXXFLAGS and LDFLAGS can supply include and library paths for nauty.
+    args = ['c++', *shlex.split(os.environ.get('CXXFLAGS', '')), '-std=c++20', '-O3',
+            '-march=native', str(source), '-o', str(binary),
+            *shlex.split(os.environ.get('LDFLAGS', ''))]
     if nauty:
         args.append('-lnauty')
     run(args, check=True)
