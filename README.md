@@ -16,14 +16,24 @@ The Zarankiewicz number $z(m,n;s,t)$ is the largest number of ones in an $m \tim
 | $z(18,19;3,3) = 156$ | [`z18x19-k33`](z18x19-k33) | Two witnesses and exhaustion excluding 157 |
 | $z(19,19;3,3) = 164$ | [`z19-k33`](z19-k33) | Witness and a row-deletion bound from the 18 × 19 value |
 | $z(19,20;3,3) = 171$ | [`z19x20-k33`](z19x20-k33) | Cyclic witness and exhaustion excluding 172 |
-| $z(19,21;3,3) = 177$ | [`z19x21-k33`](z19x21-k33) | Deletion witness and exhaustion of all three cases at 178 |
+| $z(19,21;3,3) = 177$ | [`z19x21-k33`](z19x21-k33) | Witness and exhaustion excluding 178 |
 | $z(20,20;3,3) = 180$ | [`z20-k33`](z20-k33) | Cyclic witness and a row-deletion bound from the 19 × 20 value |
-| $z(20,21;3,3) = 185$ | [`z20x21-k33`](z20x21-k33) | Witness and forced eight-row deletion to 19 × 21 |
-| $z(21,21;3,3) = 193$ | [`z21-k33`](z21-k33) | Witness and forced two-line deletion to 19 × 21 |
+| $z(20,21;3,3) = 185$ | [`z20x21-k33`](z20x21-k33) | Witness and a reduction of 186 to the 19 × 21 value |
+| $z(21,21;3,3) = 193$ | [`z21-k33`](z21-k33) | Witness and a reduction of 194 to the 19 × 21 value |
 
-Before this work the best published upper bounds for 17 × 17, 17 × 18 and 18 × 18 were 141, 148 and 156 ([Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf)). The 17 × 18 proof uses the 17 × 17 value, the 18 × 18 proof uses the 17 × 18 value, and the 18 × 19 proof uses both of those. The 19 × 19 bound then follows from the 18 × 19 value by deleting rows. The 19 × 20 proof uses the 18 × 19 and 19 × 19 values. The 20 × 20 bound then follows from the 19 × 20 value by deleting rows. The 17 × 17 value also gives a short proof that the bipartite Ramsey number $b(2,2,3)$ is 17, first proved by [Rowshan and Gholami](https://arxiv.org/abs/2108.03572).
+Before this work the best published upper bounds for 17 × 17, 17 × 18 and 18 × 18 were 141, 148 and 156 ([Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf)). The 17 × 18 proof uses the 17 × 17 value, the 18 × 18 proof uses the 17 × 18 value, and the 18 × 19 proof uses both of those. The 19 × 19 bound then follows from the 18 × 19 value by deleting rows. The 19 × 20 proof uses the 18 × 19 and 19 × 19 values. The 20 × 20 bound then follows from the 19 × 20 value by deleting rows. The 19 × 21 proof uses the 18 × 19 and 19 × 20 values together with new bounds of 163 on 18 × 20 and 170 on 18 × 21. The 20 × 21 and 21 × 21 proofs show that a heavier matrix would have one or two parallel lines of degree eight, whose deletion would leave 178 ones on 19 × 21. The 17 × 17 value also gives a short proof that the bipartite Ramsey number $b(2,2,3)$ is 17, first proved by [Rowshan and Gholami](https://arxiv.org/abs/2108.03572).
 
-![Extremal matrices from 17 × 17 to 20 × 20 with 138, 143, 150, 156, 164, 171 and 180 ones; outlines mark the column or row added to an earlier matrix](figures/chain.svg)
+Three of the first five witnesses extend an earlier matrix by one line, outlined.
+
+![Extremal matrices from 17 × 17 to 19 × 19 with 138, 143, 150, 156 and 164 ones; outlines mark the column or row added to an earlier matrix](figures/chain.svg)
+
+The 19 × 20 and 20 × 20 witnesses come from one cyclic square, in which each row shifts the previous one by a place.
+
+![Extremal 19 × 20 and 20 × 20 matrices with 171 and 180 ones, both from a cyclic square; an outline marks the row added to the rectangle](figures/cyclic.svg)
+
+The 19 × 21 and 20 × 21 witnesses are rows of one 193-one square.
+
+![Extremal matrices on 19 × 21, 20 × 21 and 21 × 21 with 177, 185 and 193 ones; the two larger ones each add an outlined row of eight ones to the previous one](figures/square-193.svg)
 
 ## Bounds under investigation
 

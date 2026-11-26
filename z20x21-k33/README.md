@@ -2,6 +2,8 @@
 
 **The maximum is 185.** Removing an eight-one row from the 193-one square gives the lower bound. Weights 188 and 187 are excluded. We also classify the extremal 20 × 20 squares. [Exclusion of 187](rare-rows.md) · [185-one matrix](witness-185.txt) · [193-one square](../z21-k33/README.md)
 
+In the OEIS this gives a(20) = 186 in [A006621](https://oeis.org/A006621), Zarankiewicz's problem k_3(n,n+1).
+
 Every 186-one rectangle has an eight-row and at least four columns of degree below nine. Deleting the eight-row would leave 178 on 19 × 21, whose maximum is 177. This excludes 186 and all heavier matrices. [Restrictions at 186](weight-186.md) · [Exclusion of 178](../z19x21-k33/README.md)
 
 ## Excluding 188
@@ -40,12 +42,22 @@ A row's columns, with the other nineteen rows as blocks, form a projection whose
 
 ## Replay
 
-The first command checks the bounds and the weight-187 restrictions. The second also enumerates all extremal 20 × 20 squares. All use Python 3.10+, C++20 and nauty.
+All commands use Python 3.10+, C++20 and nauty. The upper bound of 185 needs the census of extremal 20 × 20 squares, the 18-row bounds and the 163-one core exclusion, the restrictions at 186, and the 19 × 21 exhaustion:
 
 ```sh
-python3 verify_bounds.py
 python3 verify_bounds.py --census --jobs 8
+python3 verify_core_bounds.py --jobs 8
+python3 verify_weight_186.py --jobs 8
+python3 ../z19x21-k33/verify_weight_178.py --jobs 8
+```
+
+The direct exclusions of 188 and 187 above do not use the 19 × 21 search, and the value 185 does not need them. The first command above already excludes 188. To replay the exclusion of 187, run
+
+```sh
+python3 verify_core_bounds.py --jobs 8 --full --sevens 7 8 9 10
 python3 verify_rare_rows.py --jobs 8
 ```
 
-The last command excludes 187. It relies on the restrictions replayed by `verify_core_bounds.py --full`.
+The separate [four-eight exclusion](four-eights.md) is replayed by `verify_four_eights.py --jobs 8`.
+
+If nauty is not on the compiler's default search paths, pass its include and library paths through `CXXFLAGS` and `LDFLAGS` as described in the [top-level README](../README.md).

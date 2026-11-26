@@ -62,3 +62,5 @@ From this directory run the following command to replay all three cases. The opt
 ```sh
 python3 verify_weight_178.py --jobs 8 --cache /tmp/z178-replay
 ```
+
+If nauty is not on the compiler's default search paths, pass its include and library paths through `CXXFLAGS` and `LDFLAGS` as described in the [top-level README](../README.md).

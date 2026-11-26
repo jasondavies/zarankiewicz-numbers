@@ -2,6 +2,8 @@
 
 **The maximum is 193.** The witness has two lines of degree eight, thirteen of degree nine and six of degree ten on each side. Every triple of rows and every triple of columns has at most two common entries. Removing the first row gives the 185-one rectangle. [193-one matrix](witness-193.txt) · [20 × 21 bounds](../z20x21-k33/README.md)
 
+In the OEIS this gives a(21) = 193 in [A350304](https://oeis.org/A350304), 194 in [A001198](https://oeis.org/A001198), 248 in [A350237](https://oeis.org/A350237) and 247 in [A347473](https://oeis.org/A347473).
+
 Every 194-one square has two parallel lines of degree eight. After transposing if necessary, their deletion leaves 178 on 19 × 21. The exact 19 × 21 maximum of 177 therefore excludes 194 and all heavier squares. [Two-line reduction](../z20x21-k33/weight-186.md) · [Exclusion of 178](../z19x21-k33/README.md)
 
 ## Upper bound and reduction to the rectangle
@@ -29,3 +31,5 @@ Run the following from this directory with Python 3.10+, C++20 and nauty install
 ```sh
 python3 verify_bounds.py
 ```
+
+If nauty is not on the compiler's default search paths, pass its include and library paths through `CXXFLAGS` and `LDFLAGS` as described in the [top-level README](../README.md).
