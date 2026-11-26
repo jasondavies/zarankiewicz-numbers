@@ -316,4 +316,16 @@ int main(int argc,char** argv) {
         if (!search.catalogue) throw std::runtime_error("cannot write catalogue");
     }
     search.run(lo,hi);
+    // Machine-readable outcome: status 0 when the search is exhausted (or only
+    // the catalogue was written), status 1 when a matrix was printed.
+    if (search.catalogue_only) {
+        std::cout<<"RESULT CATALOGUE"<<std::endl;
+        return 0;
+    }
+    if (search.witnessed) {
+        std::cout<<"RESULT FOUND "<<search.witnessed<<std::endl;
+        return 1;
+    }
+    std::cout<<"RESULT EXHAUSTED"<<std::endl;
+    return 0;
 }

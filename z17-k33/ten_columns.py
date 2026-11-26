@@ -102,6 +102,8 @@ def main():
             assert largest_inside_extension(f + q) == 3
     print(dict(checked))
     assert checked == {'ten-column cores': 120}
+    # With both checks, no line has degree eleven or more. Degree exactly ten
+    # is excluded by ten_cores_139.py and ten_border.cpp.
 
 
 if __name__ == '__main__':

@@ -11,6 +11,16 @@ The two witnesses have different line degrees. One has a ten on each side. The s
 
 A line is a row or a column. The external inputs are the upper bounds 133, 126, 118 and 110 for 16, 15, 14 and 13 rows on seventeen columns, and the value 128 and uniqueness of its extremal graph on 16 by 16. These are given in [Collins, Riasanovsky, Wallace and Radziszowski, Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf).
 
+| External input | Status in Table 4 | Used for |
+|---|---|---|
+| $z(16,17;3,3)\le133$ | Exhaustive computation | Minimum degree six; core weight 133 |
+| $z(15,17;3,3)\le126$ | Bound from the paper's lemmas | No two sixes on a shore; core row degrees |
+| $z(14,17;3,3)\le118$ | Bound from the paper's lemmas | No six with two sevens; core row degrees |
+| $z(13,17;3,3)\le110$ | Exhaustive computation | No four sevens on a shore |
+| $z(16,16;3,3)=128$, unique extremal graph | Exact, marked unique | Core columns have degree at least six |
+
+We did not rerun the computations behind these entries. The 128-one representative used here is checked to be $K_{3,3}$-free with 128 ones.
+
 Deleting the lowest-degree lines implies that the minimum is at least six. On one shore there cannot be two sixes, a six with two sevens, or four sevens, since the matrices left by their deletion exceed the corresponding bounds. The total deficit below eight on either shore is therefore at most three. No two rows can share six columns. Those columns contain at least $48-3=45$ ones, whereas the two rows and the remaining fifteen can supply at most $12+30=42$. Transpose for the analogous bound on column pairs.
 
 Here is the finite reduction that excludes degree ten or greater. Mark ten entries of a putative large row. Each of the other sixteen rows restricts to a set of size at most five on the ten points, and any two restrictions intersect in at most two. Write $m,q$ for the numbers of five-sets and four-sets. The total projected weight is at least $70-3=67$ and at most $48+2m+q$. The sign vectors of five-sets (positive on the set, negative elsewhere) have norm squared ten and mutual inner product at most $-2$. The squared norm of their sum gives $m\le6$.
@@ -60,7 +70,11 @@ Choose the required number of additional lines in nonincreasing order of weight.
 
 The two surviving projections have two and one labelled completions to a 132-one core, respectively, in the retained ordering. The script `check_final_cores.py` enumerates their completions anew and checks every one of the 131,072 masks for a possible seventeenth row. In all three cases the largest appendable row has weight **six**. A seven was needed. This exhausts the alternatives for 139 and proves the theorem.
 
-The separate checker `audit_core_catalogue.cpp` builds bitsets over all candidate masks at each weight. For each pair of fixed lines it removes every mask intersecting that pair in three or more entries. It first asks whether enough maximum-weight lines can even coexist. For the six-row branch this alone excludes all 4,230 projections. For the seven-row branch it also tests mixtures of line weights when needed. Its input is the catalogue produced by the common projection generator. The audit checks completion independently of the main completion routine.
+The separate checker `audit_core_catalogue.cpp` builds bitsets over all candidate masks at each weight. For each pair of fixed lines it removes every mask intersecting that pair in three or more entries. It first asks whether enough maximum-weight lines can even coexist. For the six-row branch this alone excludes all 4,230 projections. For the seven-row branch it also tests mixtures of line weights when needed. Its input is the catalogue produced by the common projection generator. The audit checks completion independently of the main completion routine. Both routines rely on the same generator, so completeness of the catalogue rests on that generator and on the coverage argument above. A separately implemented generator would be the most useful further check.
+
+## A consequence for bipartite Ramsey numbers
+
+The bipartite Ramsey number $b(2,2,3)$ is the least $b$ such that every colouring of the edges of $K_{b,b}$ with three colours contains a $K_{2,2}$ in the first or second colour or a $K_{3,3}$ in the third. Collins, Riasanovsky, Wallace and Radziszowski proved $17\le b(2,2,3)\le18$ and conjectured $b(2,2,3)=17$. They noted that $z(17;3)\le140$ would suffice. [Rowshan and Gholami](https://arxiv.org/abs/2108.03572) later proved the conjecture by a different argument, [published in *Mathematics*](https://doi.org/10.3390/math10050701). The theorem gives a short alternative proof. With $z(17,17;2,2)=74$ from the same paper, the three colour classes of such a colouring of $K_{17,17}$ would have at most $74+74+138=286<289$ edges.
 
 ## Witnesses
 
@@ -88,7 +102,14 @@ Each column of text below is one entire 17 by 17 matrix. The first was found by 
 
 ## Replay
 
-The shortest complete replay is `python3 verify_exact.py` from the accompanying source bundle. It requires Python 3.10 or newer, a C++20 compiler, and the nauty development library. It verifies both explicit witnesses, reruns the ten-point check, generates each entire nine-point catalogue, and audits the final survivors. Temporary catalogues are removed after the run.
+The shortest complete replay is `python3 verify_exact.py` from the [`z17-k33` directory of the repository](https://github.com/jasondavies/zarankiewicz-numbers/tree/main/z17-k33). It requires Python 3.10 or newer, a C++20 compiler, and the nauty development library. It verifies both explicit witnesses, reruns the ten-point check, generates each entire nine-point catalogue, and audits the final survivors. Temporary catalogues are removed after the run.
+
+Recorded complete replays:
+
+| Run | Source | Python | Compiler | nauty | Time |
+|---|---|---|---|---|---:|
+| External review | commit `eb51b4f` (originally `4bd72e9`) | 3.12.14 | G++ 14.2.0 | 2.9.3 | 8 min 37 s |
+| Ubuntu 24.04 | this version | 3.12.3 | G++ 13.3.0 | 2.8.8 | 7 min 27 s |
 
 
 For a separate replay using the primary completion routine, run the following commands in this directory.
@@ -121,3 +142,5 @@ Two positive controls with an eight-entry border reconstruct valid 137-one matri
 /tmp/six-row-core column control137 0 0
 /tmp/six-row-core row control137 0 0
 ```
+
+The last line of output from `six_row_core` gives its outcome. `RESULT EXHAUSTED` with exit status 0 means the search finished without finding a matrix. `RESULT FOUND n` with exit status 1 means it printed n matrices, as the positive controls do. `RESULT CATALOGUE` with exit status 0 means completion was disabled and only the catalogue was written.

@@ -35,8 +35,6 @@ Each result has its own directory with a README describing the files and how to 
 - a written proof as a typeset PDF, with its Markdown source where there is one;
 - the verification sources and a `verify_exact.py` script that replays the whole check.
 
-`z17-k33` also has a zip bundle of the whole directory.
-
 The replays need Python 3.10 or newer, a C++20 compiler available as `c++`, and the nauty headers and library. If nauty is not on the compiler's default search paths, as with Homebrew on Apple Silicon, pass them through `CXXFLAGS` and `LDFLAGS`:
 
 ```sh
