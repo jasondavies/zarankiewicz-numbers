@@ -9,8 +9,9 @@
 using Mask = unsigned;
 using Lines = std::vector<Mask>;
 
-struct Extensions {
-    std::array<std::array<Mask, 18>, 18> forbidden{};
+template<int rows>
+struct LineExtensions {
+    std::array<std::array<Mask, rows>, rows> forbidden{};
     Lines allowed, fixed;
     void supports(Mask pool, Mask chosen, int left) {
         if (!left) {
@@ -53,16 +54,18 @@ struct Extensions {
         return false;
     }
     bool run(int k) {
-        std::array<Mask, 18> rows{};
+        std::array<Mask, rows> incident{};
         for (size_t j = 0; j < fixed.size(); ++j)
             for (Mask s = fixed[j]; s; s &= s - 1)
-                rows[std::countr_zero(s)] |= 1u << j;
-        for (int j = 0; j < 18; ++j)
+                incident[std::countr_zero(s)] |= 1u << j;
+        for (int j = 0; j < rows; ++j)
             for (int i = 0; i < j; ++i)
                 for (int h = 0; h < i; ++h)
-                    if (std::popcount(rows[j] & rows[i] & rows[h]) >= 2)
+                    if (std::popcount(incident[j] & incident[i] & incident[h]) >= 2)
                         forbidden[i][h] |= 1u << j;
-        supports((1u << 18) - 1, 0, 7);
+        supports((1u << rows) - 1, 0, 7);
         return choose(allowed, k);
     }
 };
+
+using Extensions = LineExtensions<18>;

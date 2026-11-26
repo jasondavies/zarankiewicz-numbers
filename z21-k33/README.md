@@ -1,8 +1,8 @@
-# Bounds for the 21 × 21 Zarankiewicz number for K₃,₃
+# The 21 × 21 Zarankiewicz number for K₃,₃ is 193
 
-**The remaining values are 193 and 194.** The witness has two lines of degree eight, thirteen of degree nine and six of degree ten on each side. Every triple of rows and every triple of columns has at most two common entries. Removing the first row gives the 185-one rectangle. [193-one matrix](witness-193.txt) · [20 × 21 bounds](../z20x21-k33/README.md)
+**The maximum is 193.** The witness has two lines of degree eight, thirteen of degree nine and six of degree ten on each side. Every triple of rows and every triple of columns has at most two common entries. Removing the first row gives the 185-one rectangle. [193-one matrix](witness-193.txt) · [20 × 21 bounds](../z20x21-k33/README.md)
 
-Every 194-one square has two parallel lines of degree eight. After transposing if necessary, their deletion leaves 178 on 19 × 21. Conversely, adding two jointly compatible eight-rows to any such 178-one matrix gives 194. [Reduction and extension checker](../z20x21-k33/weight-186.md)
+Every 194-one square has two parallel lines of degree eight. After transposing if necessary, their deletion leaves 178 on 19 × 21. The exact 19 × 21 maximum of 177 therefore excludes 194 and all heavier squares. [Two-line reduction](../z20x21-k33/weight-186.md) · [Exclusion of 178](../z19x21-k33/README.md)
 
 ## Upper bound and reduction to the rectangle
 

@@ -1,8 +1,8 @@
-# Bounds for the 20 × 21 Zarankiewicz number for K₃,₃
+# The 20 × 21 Zarankiewicz number for K₃,₃ is 185
 
-**The remaining values are 185 and 186.** Removing an eight-one row from the 193-one square gives the lower bound. Weights 188 and 187 are excluded. We also classify the extremal 20 × 20 squares. [Exclusion of 187](rare-rows.md) · [185-one matrix](witness-185.txt) · [193-one square](../z21-k33/README.md)
+**The maximum is 185.** Removing an eight-one row from the 193-one square gives the lower bound. Weights 188 and 187 are excluded. We also classify the extremal 20 × 20 squares. [Exclusion of 187](rare-rows.md) · [185-one matrix](witness-185.txt) · [193-one square](../z21-k33/README.md)
 
-Every 186-one rectangle has an eight-row and at least four columns of degree below nine. Deleting the eight-row leaves a 178-one matrix on 19 × 21. [Restrictions at 186 and replay](weight-186.md)
+Every 186-one rectangle has an eight-row and at least four columns of degree below nine. Deleting the eight-row would leave 178 on 19 × 21, whose maximum is 177. This excludes 186 and all heavier matrices. [Restrictions at 186](weight-186.md) · [Exclusion of 178](../z19x21-k33/README.md)
 
 ## Excluding 188
 

@@ -16,7 +16,10 @@ The Zarankiewicz number $z(m,n;s,t)$ is the largest number of ones in an $m \tim
 | $z(18,19;3,3) = 156$ | [`z18x19-k33`](z18x19-k33) | Two witnesses and exhaustion excluding 157 |
 | $z(19,19;3,3) = 164$ | [`z19-k33`](z19-k33) | Witness and a row-deletion bound from the 18 × 19 value |
 | $z(19,20;3,3) = 171$ | [`z19x20-k33`](z19x20-k33) | Cyclic witness and exhaustion excluding 172 |
+| $z(19,21;3,3) = 177$ | [`z19x21-k33`](z19x21-k33) | Deletion witness and exhaustion of all three cases at 178 |
 | $z(20,20;3,3) = 180$ | [`z20-k33`](z20-k33) | Cyclic witness and a row-deletion bound from the 19 × 20 value |
+| $z(20,21;3,3) = 185$ | [`z20x21-k33`](z20x21-k33) | Witness and forced eight-row deletion to 19 × 21 |
+| $z(21,21;3,3) = 193$ | [`z21-k33`](z21-k33) | Witness and forced two-line deletion to 19 × 21 |
 
 Before this work the best published upper bounds for 17 × 17, 17 × 18 and 18 × 18 were 141, 148 and 156 ([Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf)). The 17 × 18 proof uses the 17 × 17 value, the 18 × 18 proof uses the 17 × 18 value, and the 18 × 19 proof uses both of those. The 19 × 19 bound then follows from the 18 × 19 value by deleting rows. The 19 × 20 proof uses the 18 × 19 and 19 × 19 values. The 20 × 20 bound then follows from the 19 × 20 value by deleting rows. The 17 × 17 value also gives a short proof that the bipartite Ramsey number $b(2,2,3)$ is 17, first proved by [Rowshan and Gholami](https://arxiv.org/abs/2108.03572).
 
@@ -28,9 +31,6 @@ Before this work the best published upper bounds for 17 × 17, 17 × 18 and 18 �
 |---|---:|---:|---|
 | 18 × 20 | 162 | 163 | [Deletion witness and marked-row proof](z20x21-k33/core-search.md) |
 | 18 × 21 | 168 | 170 | [Upper bound](z20x21-k33/core-search.md) and deletion of the three smallest rows from the [193-one square](z21-k33/witness-193.txt) |
-| 19 × 21 | 177 | 178 | [Deletion witness and exclusion of 179](z20x21-k33/weight-186.md) |
-| 20 × 21 | 185 | 186 | [Witness and proof](z20x21-k33), including a census of the extremal 20 × 20 squares and the [exclusion of 187](z20x21-k33/rare-rows.md) |
-| 21 × 21 | 193 | 194 | [Witness and proof](z21-k33), including the [reduction of 194 to a two-row extension of 178 on 19 × 21](z20x21-k33/weight-186.md) |
 
 ## OEIS
 
@@ -38,11 +38,11 @@ These results give new terms of the following sequences. Some sequences count th
 
 | Sequence | Name | New term | From |
 |---|---|---|---|
-| [A350304](https://oeis.org/A350304) | Maximum number of 1's in an n X n binary matrix without an all-ones 3 X 3 submatrix | a(17) = 138, a(18) = 150, a(19) = 164, a(20) = 180 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33` |
-| [A001198](https://oeis.org/A001198) | Zarankiewicz's problem k_3(n) | a(17) = 139, a(18) = 151, a(19) = 165, a(20) = 181 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33` |
-| [A350237](https://oeis.org/A350237) | Minimum number of 1's in an n X n binary matrix with no zero 3 X 3 submatrix | a(17) = 289 − 138 = 151, a(18) = 324 − 150 = 174, a(19) = 361 − 164 = 197, a(20) = 400 − 180 = 220 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33` |
-| [A347473](https://oeis.org/A347473) | Maximum number of nonzero entries allowed in an n X n matrix to ensure there is a 3 X 3 zero submatrix | a(17) = 151 − 1 = 150, a(18) = 174 − 1 = 173, a(19) = 197 − 1 = 196, a(20) = 220 − 1 = 219 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33` |
-| [A006621](https://oeis.org/A006621) | Zarankiewicz's problem k_3(n,n+1) | a(16) = 133, a(17) = 144, a(18) = 157, a(19) = 172 | `z16x17-k33` (first by Wei), `z17x18-k33`, `z18x19-k33`, `z19x20-k33` |
+| [A350304](https://oeis.org/A350304) | Maximum number of 1's in an n X n binary matrix without an all-ones 3 X 3 submatrix | a(17) = 138, a(18) = 150, a(19) = 164, a(20) = 180, a(21) = 193 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33`, `z21-k33` |
+| [A001198](https://oeis.org/A001198) | Zarankiewicz's problem k_3(n) | a(17) = 139, a(18) = 151, a(19) = 165, a(20) = 181, a(21) = 194 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33`, `z21-k33` |
+| [A350237](https://oeis.org/A350237) | Minimum number of 1's in an n X n binary matrix with no zero 3 X 3 submatrix | a(17) = 289 − 138 = 151, a(18) = 324 − 150 = 174, a(19) = 361 − 164 = 197, a(20) = 400 − 180 = 220, a(21) = 441 − 193 = 248 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33`, `z21-k33` |
+| [A347473](https://oeis.org/A347473) | Maximum number of nonzero entries allowed in an n X n matrix to ensure there is a 3 X 3 zero submatrix | a(17) = 151 − 1 = 150, a(18) = 174 − 1 = 173, a(19) = 197 − 1 = 196, a(20) = 220 − 1 = 219, a(21) = 248 − 1 = 247 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33`, `z21-k33` |
+| [A006621](https://oeis.org/A006621) | Zarankiewicz's problem k_3(n,n+1) | a(16) = 133, a(17) = 144, a(18) = 157, a(19) = 172, a(20) = 186 | `z16x17-k33` (first by Wei), `z17x18-k33`, `z18x19-k33`, `z19x20-k33`, `z20x21-k33` |
 
 The listed terms of A006621 stop at a(12). The missing a(13) = 99, a(14) = 113 and a(15) = 124 follow from the exact values $z(13,14;3,3)=98$, $z(14,15;3,3)=112$ and $z(15,16;3,3)=123$ in [Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf).
 
