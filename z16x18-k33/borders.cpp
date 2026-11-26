@@ -122,7 +122,7 @@ int main(int argc, char** argv) {
     if (!outside && side != "inside") return 2;
     const int points = std::stoi(argv[2]), n = std::stoi(argv[3]), extra = std::stoi(argv[4]);
     const int low = std::stoi(argv[5]), high = std::stoi(argv[6]), weight = std::stoi(argv[7]);
-    if (points < 1 || points > 18 || n < 1 || n > 18 || extra < 1 ||
+    if (points < 1 || points > 18 || n < 1 || n > 19 || extra < 1 ||
         low < int(outside) || high > n+int(outside) || high < low) return 2;
     const Mask marker = 1u << n;
     std::vector<Layer> layers;

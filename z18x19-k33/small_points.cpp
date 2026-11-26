@@ -1,15 +1,18 @@
-// Enumerate seventeen blocks on a marked row of two through eight points.
+// Enumerate fixed-length block multisets on a marked row, up to relabelling.
 #include "../z16x18-k33/block_families.hpp"
 #include <array>
 #include <iostream>
 
-constexpr int lines = 17;
+constexpr int max_points = 10;
 
 int main(int argc, char **argv) {
-    if (argc != 3)
+    if (argc != 3 && argc != 5)
         return 2;
     int points = std::stoi(argv[1]), minimum = std::stoi(argv[2]);
-    if (points < 2 || points > 8)
+    const int lines = argc == 5 ? std::stoi(argv[3]) : 17;
+    const int min_load = argc == 5 ? std::stoi(argv[4]) : 7;
+    if (points < 2 || points > max_points || lines < 1 || lines > 19 ||
+        min_load < 0 || min_load > lines || minimum < 0 || minimum > 5 * lines)
         return 2;
     std::array<Blocks, 6> pool;
     for (unsigned b = 0; b < (1u << points); ++b)
@@ -20,7 +23,7 @@ int main(int argc, char **argv) {
         std::set<Blocks> next;
         for (const auto &base : level) {
             int total = 0, high = 5, used = 0;
-            std::array<int, 8> loads{};
+            std::array<int, max_points> loads{};
             for (auto b : base) {
                 int w = std::popcount(b);
                 high = std::min(high, w);
@@ -46,7 +49,7 @@ int main(int argc, char **argv) {
                     bool feasible = true;
                     for (int j = 0; j < points; ++j) {
                         int load = loads[j] + ((b >> j) & 1u);
-                        if (load + left < 7)
+                        if (load + left < min_load)
                             feasible = false;
                     }
                     if (!feasible)
