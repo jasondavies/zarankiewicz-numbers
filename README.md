@@ -8,13 +8,15 @@ The Zarankiewicz number $z(m,n;s,t)$ is the largest number of ones in an $m \tim
 
 | Value | Directory | Contents |
 |---|---|---|
-| $z(17,17;3,3) = 138$ | [`z17-k33`](z17-k33) | Two inequivalent witnesses, a written proof, and a computer-assisted exhaustion ruling out 139 |
-| $z(16,17;3,3) = 132$ | [`z16x17-k33`](z16x17-k33) | Independent proof by marked neighbourhoods. [Wei’s earlier release](https://doi.org/10.5281/zenodo.24553293) gives the same value. |
-| $z(16,18;3,3) = 137$ | [`z16x18-k33`](z16x18-k33) | Independent proof using both sides of a marked line. [Wei’s earlier release](https://doi.org/10.5281/zenodo.24553293) establishes the same value. |
-| $z(17,18;3,3) = 143$ | [`z17x18-k33`](z17x18-k33) | A 143-one witness and a computer-assisted proof excluding 144. |
-| $z(18,18;3,3) = 150$ | [`z18-k33`](z18-k33) | A 150-one square and a computer-assisted proof excluding 151. |
+| $z(16,17;3,3) = 132$ | [`z16x17-k33`](z16x17-k33) | Witness and exhaustion excluding 133, independent of [Wei’s earlier release](https://doi.org/10.5281/zenodo.24553293) |
+| $z(16,18;3,3) = 137$ | [`z16x18-k33`](z16x18-k33) | Witness and exhaustion excluding 138, independent of [Wei’s earlier release](https://doi.org/10.5281/zenodo.24553293) |
+| $z(17,17;3,3) = 138$ | [`z17-k33`](z17-k33) | Two inequivalent witnesses and exhaustion excluding 139 |
+| $z(17,18;3,3) = 143$ | [`z17x18-k33`](z17x18-k33) | Witness and exhaustion excluding 144 |
+| $z(18,18;3,3) = 150$ | [`z18-k33`](z18-k33) | Witness and exhaustion excluding 151 |
 
-[![The two 17 × 17 witnesses with 138 ones](z17-k33/witnesses.svg)](z17-k33)
+Before this work the best published upper bounds for 17 × 17, 17 × 18 and 18 × 18 were 141, 148 and 156 ([Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf)). The 17 × 18 proof uses the 17 × 17 value, and the 18 × 18 proof uses the 17 × 18 value. The 17 × 17 value also gives a short proof that the bipartite Ramsey number $b(2,2,3)$ is 17, first proved by [Rowshan and Gholami](https://arxiv.org/abs/2108.03572).
+
+![Extremal matrices for 17 × 17, 17 × 18 and 18 × 18 with 138, 143 and 150 ones; the 17 × 18 matrix is the 17 × 17 matrix plus one outlined column](figures/chain.svg)
 
 ## OEIS
 

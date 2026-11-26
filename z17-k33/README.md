@@ -1,4 +1,4 @@
-# The 17 × 17 Zarankiewicz number for K₃,₃
+# The 17 × 17 Zarankiewicz number for K₃,₃ is 138
 
 A 17 × 17 binary matrix can contain at most **138 ones** while avoiding an all-ones 3 × 3 submatrix. Any three rows and any three columns may be chosen.
 

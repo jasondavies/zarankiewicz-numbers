@@ -4,9 +4,9 @@ A 16 × 17 binary matrix can have **132 ones** while avoiding an all-ones 3 × 3
 
 The [proof PDF](z16x17-exact.pdf) includes the matrix. The [witness](witness-132.txt) is obtained by deleting the six-one row of the [17 × 17 construction](../z17-k33/witness-138-six.txt). The verifier checks all 380,800 choices of three rows and three columns. Afrasyab had already established the lower bound and recorded the interval from 132 to 133. A subsequent SAT search reported unresolved branches at maximum row degrees nine and ten. [Afrasyab, §3](https://arxiv.org/html/2608.08154v1) · [Earlier SAT search](https://slopdealer.com/research/papers/ml-091/)
 
-Jiuzeng Wei independently obtained the same value by degree-constrained canonical augmentation and released the result on 26 November 2026 before our local proof commit. The same release establishes $z(16,18;3,3)=137$ and $142\le z(16,19;3,3)\le143$. The proof below uses a marked row or column and tests completions of its nine-point neighbourhood. [Wei’s archived proof and data](https://doi.org/10.5281/zenodo.24553293)
+Jiuzeng Wei established this value first, by degree-constrained canonical augmentation, in a release on 26 November 2026. The proof here is independent. The same release establishes $z(16,18;3,3)=137$ and $142\le z(16,19;3,3)\le143$. The proof below uses a marked row or column and tests completions of its nine-point neighbourhood. [Wei’s archived proof and data](https://doi.org/10.5281/zenodo.24553293)
 
-In the OEIS this gives a(16) = 133 in [A006621](https://oeis.org/A006621), Zarankiewicz's problem k_3(n,n+1), whose listed terms currently stop at a(12).
+In the OEIS this gives a(16) = 133 in [A006621](https://oeis.org/A006621), Zarankiewicz's problem k_3(n,n+1), whose listed terms currently stop at a(12). The intermediate terms a(13) = 99, a(14) = 113 and a(15) = 124 follow from exact values in [Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf).
 
 ## Upper bound
 
@@ -50,4 +50,4 @@ If nauty is not on the compiler's default search paths, as with Homebrew on Appl
 
 The replay uses the [ten-point routines](../z17-k33/ten_columns.py) and [128-one core representative embedded in the previous witness](../z17-k33/bordered-137.txt). It compiles [the catalogue generator](catalogue.cpp) in a temporary directory and checks every projection with [the bitset completion search](completions.py). Both orientations also have a positive control at weight 130. A second implementation derived from the square search was used during the calculation and produced the same two catalogues and exclusions.
 
-As a further consequence, $z(16,18;3,3)\le139$. A 140-one matrix on eighteen columns has a column of degree at most seven. Deleting it would leave at least 133 ones on seventeen columns.
+As a further consequence, $z(16,18;3,3)\le139$. A 140-one matrix on eighteen columns has a column of degree at most seven. Deleting it would leave at least 133 ones on seventeen columns. The [16 × 18 proof](../z16x18-k33/README.md) sharpens this to the exact value 137.

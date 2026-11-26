@@ -1,8 +1,10 @@
-# The 18 × 18 Zarankiewicz number for $K_{3,3}$ is 150
+# The 18 × 18 Zarankiewicz number for K₃,₃ is 150
 
 An 18 × 18 binary matrix can have **150 ones** while avoiding an all-ones 3 × 3. Every such matrix with 151 ones contains an all-ones 3 × 3. The rows and columns of the forbidden submatrix may be chosen anywhere.
 
 The [150-one witness](witness-150.txt) has three rows of degree ten and fifteen of degree eight, with the same degrees on the column side. The verifier checks both the row triples and the column triples. The computer-assisted upper bound uses the [17 × 18 maximum of 143](../z17x18-k33/README.md). An earlier published upper bound for the square was 156. [Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf)
+
+In the OEIS this gives a(18) = 150 in [A350304](https://oeis.org/A350304), 151 in [A001198](https://oeis.org/A001198), 174 in [A350237](https://oeis.org/A350237) and 173 in [A347473](https://oeis.org/A347473).
 
 [Download the proof and witness matrix (PDF).](z18-exact.pdf)
 
@@ -29,3 +31,5 @@ From this directory, with Python 3.10+, a C++20 compiler named `c++`, and the na
 ```sh
 python3 verify_exact.py
 ```
+
+If nauty is not on the compiler's default search paths, pass its include and library paths through `CXXFLAGS` and `LDFLAGS` as described in the [top-level README](../README.md).

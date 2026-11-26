@@ -1,4 +1,4 @@
-# An independent proof that the 16 × 18 maximum is 137
+# The 16 × 18 Zarankiewicz number for K₃,₃ is 137
 
 Jiuzeng Wei released an exhaustive proof of this value on 26 November 2026. This directory gives a second proof using the two sides of a marked line. The lower witness extends Hou’s 132-one matrix by the row `111000101000000000`. Direct inspection of the 560 triples of rows checks the witness. [Wei’s archive](https://doi.org/10.5281/zenodo.24553293) · [Hou’s matrix](https://github.com/ShengtengHou/finite-zarankiewicz-seven-values/blob/main/verification/witnesses/z1518_132.txt) · [Witness](witness-137.txt)
 
@@ -43,5 +43,7 @@ With Python 3.10+, a C++20 compiler and nauty installed, run
 ```sh
 python3 verify_exact.py --jobs 4
 ```
+
+If nauty is not on the compiler's default search paths, pass its include and library paths through `CXXFLAGS` and `LDFLAGS` as described in the [top-level README](../README.md).
 
 The replay regenerates its catalogues in a temporary directory and checks the returned counts. It uses the nine-point generator from the 16 × 17 proof. All finite exclusions for the 16 × 18 upper bound run locally from source.
