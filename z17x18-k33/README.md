@@ -8,7 +8,7 @@ A 17 × 18 binary matrix can have **143 ones** while avoiding an all-ones 3 × 3
 
 The starting ceiling of 145 follows from Jiuzeng Wei’s exact 16 × 18 value of 137. We also checked weight 145 directly. That calculation can be replayed separately and supplies the twelve-point block lemma used in the 144 proof. [Wei’s archive](https://doi.org/10.5281/zenodo.24553293) · [Independent 16 × 18 proof](../z16x18-k33/README.md) · [145-one calculation](weight-145.md)
 
-As a consequence, $z(18,18;3,3)\le151$. An 18 × 18 matrix of weight 152 has a row of weight at most eight. Deleting it would leave at least 144 ones in 17 × 18.
+As a consequence, $z(18,18;3,3)\le151$. An 18 × 18 matrix of weight 152 has a row of weight at most eight. Deleting it would leave at least 144 ones in 17 × 18. The [18 × 18 proof](../z18-k33/README.md) sharpens this to the exact value 150.
 
 [Download the proof with its witness matrix (PDF).](z17x18-exact.pdf)
 
