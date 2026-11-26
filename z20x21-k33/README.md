@@ -30,6 +30,8 @@ Deleting any two of these columns leaves an extremal 171-one 20 × 19 core. Up t
 
 An alternative starting point for the 187 search is to delete **three** eight-columns. This leaves 163 ones on 20 × 18. All remaining columns have degree at least eight. All core rows have degree at least seven, since deleting one leaves at most 156 on 19 × 18. If there were exactly three eight-columns originally, the remaining column degrees would be seventeen nines and one ten. Adding three jointly legal eight-columns to any such 163-one core would give a 187-one witness. [18 × 19 maximum](../z18x19-k33/README.md)
 
+The core search narrows 187 to four column profiles. The number of eight-columns is between four and seven, every other column has degree nine or ten, and at most one row has degree eight. After deleting any three eight-columns, the 163-one core must have between one and six seven-rows. [Core bounds, profile restrictions and replay](core-search.md)
+
 ## Replay
 
 The first command checks the bounds and the weight-187 restrictions. The second also enumerates all extremal 20 × 20 squares. Both use Python 3.10+, C++20 and nauty.

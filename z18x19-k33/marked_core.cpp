@@ -3,13 +3,14 @@
 
 struct MarkedCoreSearch {
     int min_squares = 0, max_squares = 10000;
+    int width = 19;
     int k, m, t, total, peak, remaining_excess, missing, excess, score_without_squares;
     std::array<int, 17> capacity{};
     Lines fixed;
     std::array<std::array<Mask, 17>, 17> forbidden_triples{};
     std::array<Lines, 18> options;
     std::vector<int> weights;
-    std::array<int, 18> future_weight{};
+    std::array<int, 21> future_weight{};
     int unused_capacity = 0, multiplier = 1;
     std::array<unsigned char, 1u << 17> pair_cache{};
     bool compatible_pair(Mask both) {
@@ -160,7 +161,7 @@ struct MarkedCoreSearch {
     bool run(int count, int points, const Lines &blocks, int goal, int alpha) {
         multiplier = alpha;
         k = count;
-        m = 19 - k;
+        m = width - k;
         t = points;
         total = goal - 7 * k;
         missing = m - t;
@@ -206,10 +207,11 @@ struct MarkedCoreSearch {
     }
 };
 int main(int argc, char **argv) {
-    if (argc < 3 || argc > 7 || argc == 6)
+    if (argc < 3 || argc > 8 || argc == 6)
         return 2;
     int k = std::stoi(argv[1]), t = std::stoi(argv[2]);
-    if (k < 0 || k > 9 || t < 2 || t > 10)
+    const int width = argc == 8 ? std::stoi(argv[7]) : 19;
+    if ((width != 19 && width != 20) || k < 0 || k > width - 10 || t < 2 || t > 10)
         return 2;
     const int target = argc >= 4 ? std::stoi(argv[3]) : 157;
     const int alpha = argc >= 5 ? std::stoi(argv[4]) : 1;
@@ -228,7 +230,8 @@ int main(int argc, char **argv) {
         if (b.size() != 17)
             return 2;
         MarkedCoreSearch check;
-        if (argc == 7) {
+        check.width = width;
+        if (argc >= 7) {
             check.min_squares = std::stoi(argv[5]);
             check.max_squares = std::stoi(argv[6]);
         }
