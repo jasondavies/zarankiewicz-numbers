@@ -4,6 +4,10 @@ A 17 × 17 binary matrix can contain at most **138 ones** while avoiding an all-
 
 The [proof](marked-nine.md) gives the counting argument and the exhaustive cases. The [first witness](witness-138.txt) and [second witness](witness-138-six.txt) attain the bound and have different row-degree profiles. The [PDF](z17-exact.pdf) prints both matrices, and the [proof bundle](z17-proof.zip) includes the verification sources.
 
+![Both 138-one witnesses, drawn as 17 × 17 grids with row and column degrees](witnesses.svg)
+
+In the picture each filled square is a one, and the numbers on the right and below are the row and column degrees. Run `python3 render_witnesses.py` to redraw it from the witness files.
+
 ## Replay
 
 From this directory, run the following with Python 3.10 or newer, a C++20 compiler available as `c++`, and the nauty development headers and library installed.
