@@ -13,7 +13,7 @@ The Zarankiewicz number $z(m,n;s,t)$ is the largest number of ones in an $m \tim
 | $z(17,17;3,3) = 138$ | [`z17-k33`](z17-k33) | Two inequivalent witnesses and exhaustion excluding 139 |
 | $z(17,18;3,3) = 143$ | [`z17x18-k33`](z17x18-k33) | Witness and exhaustion excluding 144 |
 | $z(18,18;3,3) = 150$ | [`z18-k33`](z18-k33) | Witness and exhaustion excluding 151 |
-| $156 \le z(18,19;3,3) \le 157$ | [`z18x19-k33`](z18x19-k33) | Witness, exclusion of 158, and reduction of 157 to seven-column extensions of extremal squares |
+| $156 \le z(18,19;3,3) \le 157$ | [`z18x19-k33`](z18x19-k33) | Witness, exclusion of 158, and reduction of 157 to pairs of seven-one columns on extremal 18 × 17 cores |
 
 Before this work the best published upper bounds for 17 × 17, 17 × 18 and 18 × 18 were 141, 148 and 156 ([Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf)). The 17 × 18 proof uses the 17 × 17 value, and the 18 × 18 proof uses the 17 × 18 value. The 17 × 17 value also gives a short proof that the bipartite Ramsey number $b(2,2,3)$ is 17, first proved by [Rowshan and Gholami](https://arxiv.org/abs/2108.03572).
 

@@ -46,9 +46,15 @@ public:
     }
 };
 
+void print_completion(const Lines& fixed) {
+    std::cout << "completion";
+    for (Mask line : fixed) std::cout << ' ' << line;
+    std::cout << '\n';
+}
+
 // The pool is sorted in descending weight. Its members already satisfy every
 // triple test against two fixed lines, including lines fixed in recursion.
-bool choose(Lines& fixed, const Lines& pool, int left, int target, int floor) {
+bool choose(Lines& fixed, const Lines& pool, int left, int target, int floor, bool enumerate = false) {
     if (left == 0) return target == 0;
     for (size_t i = 0; i+left <= pool.size(); ++i) {
         Mask a = pool[i];
@@ -59,7 +65,10 @@ bool choose(Lines& fixed, const Lines& pool, int left, int target, int floor) {
         if (upper < target) break;
         if (left == 1) {
             fixed.push_back(a);
-            return true; // The previous two tests give d == target.
+            if (!enumerate) return true; // The previous two tests give d == target.
+            print_completion(fixed);
+            fixed.pop_back();
+            continue;
         }
         Lines next;
         for (size_t j = i+1; j < pool.size(); ++j) {
@@ -70,7 +79,7 @@ bool choose(Lines& fixed, const Lines& pool, int left, int target, int floor) {
         }
         if (int(next.size()) < left-1) continue;
         fixed.push_back(a);
-        if (choose(fixed, next, left-1, target-d, floor)) return true;
+        if (choose(fixed, next, left-1, target-d, floor, enumerate)) return true;
         fixed.pop_back();
     }
     return false;
@@ -106,7 +115,8 @@ bool can_gain(Lines& fixed, const Lines& pool, int slots, int gap, int baseline)
 int main(int argc, char** argv) {
     if (argc != 8 && argc != 9) return 2;
     const bool gain_pruning = argc == 9;
-    if (gain_pruning && std::string(argv[8]) != "--gain") return 2;
+    const bool enumerate = argc == 9 && std::string(argv[8]) == "--enumerate";
+    if (gain_pruning && !enumerate && std::string(argv[8]) != "--gain") return 2;
     const std::string side = argv[1];
     const bool outside = side == "outside";
     if (!outside && side != "inside") return 2;
@@ -164,12 +174,10 @@ int main(int argc, char** argv) {
             auto more = layers[d-low].allowed(pairs, outside ? marker : 0u);
             pool.insert(pool.end(), more.begin(), more.end());
         }
-        if (feasible && choose(fixed, pool, extra, target, low)) {
-            std::cout << "completion";
-            for (auto b : fixed) std::cout << ' ' << b;
-            std::cout << '\n';
+        if (feasible && choose(fixed, pool, extra, target, low, enumerate)) {
+            print_completion(fixed);
             return 0;
         }
     }
-    std::cout << "excluded " << cases << '\n';
+    std::cout << (enumerate ? "enumerated " : "excluded ") << cases << '\n';
 }

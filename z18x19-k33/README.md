@@ -1,6 +1,6 @@
 # Bounds for the 18 × 19 Zarankiewicz number for $K_{3,3}$
 
-**The remaining possible values are 156 and 157.** The [156-one witness](witness-156.txt) extends the [150-one square](../z18-k33/README.md) by a column with ones in rows 1, 2, 4, 7, 16 and 18 (numbered from one). Every triple of rows has at most two common ones.
+**The remaining possible values are 156 and 157.** The [156-one witness](witness-156.txt) extends the [150-one square](../z18-k33/README.md) by a column with ones in rows 1, 2, 4, 7, 16 and 18 (numbered from one). Every triple of rows has at most two common ones. A 157-one matrix must have at least two columns of degree seven. Deleting any two leaves an extremal 143-one rectangle. [Square census and two-column reduction](square-cores.md)
 
 ## Excluding 158
 
@@ -20,7 +20,7 @@ Maximum degree at most eight would give at most 144 ones. The [ten-point generat
 
 Suppose first that every column has degree at least eight. The total column excess above eight is now five. The eleven-point argument still applies, and the 978 ten-point projections again give no completion. If the maximum row degree is nine, there are $13+x$ nine-rows and $5-x$ lower-degree rows, where $x$ is the number of seven-rows and $0\le x\le2$. Every column of positive excess meets at least four of the nine-rows. They therefore see at least twenty units of excess among at most fifteen rows. Marking a nine-row with at least two such units gives $S\ge65$. All 87,842 projections with loads from seven through twelve fail the completion test.
 
-Consequently a 157-one matrix must have a seven-one column. Deleting it leaves an extremal 150-one square. Conversely, a legal seven-one extension of any such square settles the value at 157. A row of degree seven must avoid every column of degree seven, because deleting an incident pair would leave 144 ones on 17 × 18. If there are two seven-one columns, deleting both leaves an extremal 143-one matrix on 18 × 17.
+Consequently a 157-one matrix must have a seven-one column. Deleting it leaves an extremal 150-one square. Conversely, a legal seven-one extension of any such square settles the value at 157. A row of degree seven must avoid every column of degree seven, because deleting an incident pair would leave 144 ones on 17 × 18. The [square census](square-cores.md) further excludes a unique seven-one column. The remaining question is whether any extremal 18 × 17 matrix admits two compatible seven-one columns.
 
 ## Replay
 
