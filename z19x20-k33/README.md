@@ -2,6 +2,8 @@
 
 A 19 × 20 binary matrix can have **171 ones** while avoiding an all-ones 3 × 3. The witness consists of nineteen consecutive rows of the 9-regular cyclic square on twenty points. The proof below excludes 172. Erasing entries preserves avoidance, so this excludes every heavier matrix as well. [171-one witness](witness-171.txt) · [Cyclic construction](../z20-k33/README.md)
 
+In the OEIS this gives a(19) = 172 in [A006621](https://oeis.org/A006621), Zarankiewicz's problem k_3(n,n+1).
+
 ## Degree bounds at 172
 
 Use the known maxima of 156 on 18 × 19 and 164 on 19 × 19. Summing over all twenty column deletions in an admissible 18 × 20 matrix gives $z(18,20;3,3)\le\lfloor20\cdot156/19\rfloor=164$. Thus in a hypothetical 172-one matrix every row and every column has degree at least eight. An eight-row and an eight-column cannot meet. Deleting both would leave $172-8-8+1=157$ ones on 18 × 19. [18 × 19 proof](../z18x19-k33/README.md) · [19 × 19 proof](../z19-k33/README.md)
