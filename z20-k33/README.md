@@ -10,6 +10,8 @@ In the OEIS this gives a(20) = 180 in [A350304](https://oeis.org/A350304), 181 i
 
 For the upper bound, delete each of the twenty rows in turn. Every rectangle that remains contains at most 171 ones. Every entry survives nineteen deletions, so a square of weight $w$ satisfies $19w\le20\cdot171=3420$, or $w\le180$. At equality every deletion must leave exactly 171 ones. Applying the same argument to columns shows that **every extremal square has nine ones in every row and every column**. [Rectangular upper bound](../z19x20-k33/README.md)
 
+An exhaustive census at weight 180 gives one square up to independent permutations of its rows and columns. The largest column or row one can append to this square has four ones. [Census and extension check](../z20x21-k33/README.md)
+
 To check the construction, run
 
 ```sh

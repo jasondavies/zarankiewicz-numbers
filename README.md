@@ -22,6 +22,13 @@ Before this work the best published upper bounds for 17 × 17, 17 × 18 and 18 �
 
 ![Extremal matrices from 17 × 17 to 20 × 20 with 138, 143, 150, 156, 164, 171 and 180 ones; outlines mark the column or row added to an earlier matrix](figures/chain.svg)
 
+## Bounds under investigation
+
+| Size | Lower bound | Upper bound | Evidence |
+|---|---:|---:|---|
+| 20 × 21 | 185 | 187 | [Witness and proof](z20x21-k33), including a census of the extremal 20 × 20 squares |
+| 21 × 21 | 193 | 195 | [Witness and proof](z21-k33), including the reduction of weights 194 and 195 to the rectangular problem |
+
 ## OEIS
 
 These results give new terms of the following sequences. Some sequences count the least number of ones that forces an all-ones submatrix, which is one more than the Zarankiewicz number, and some count the complementary problem for zero submatrices.
