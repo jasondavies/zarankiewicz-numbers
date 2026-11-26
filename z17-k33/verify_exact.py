@@ -1,4 +1,6 @@
 """Replay the computer-assisted proof of z(17,17;3,3)=138 using a temporary directory."""
+import os
+import shlex
 from pathlib import Path
 from subprocess import PIPE, Popen, run
 from tempfile import TemporaryDirectory
@@ -10,7 +12,10 @@ HERE = Path(__file__).resolve().parent
 
 def compile_program(name, directory, nauty=False):
     binary = directory / name
-    command = ['c++', '-O3', '-std=c++20', str(HERE / (name + '.cpp'))]
+    # CXXFLAGS and LDFLAGS can supply include and library paths for nauty.
+    command = ['c++', *shlex.split(os.environ.get('CXXFLAGS', '')),
+               '-O3', '-std=c++20', str(HERE / (name + '.cpp')),
+               *shlex.split(os.environ.get('LDFLAGS', ''))]
     if nauty:
         command.append('-lnauty')
     run(command + ['-o', binary], check=True)

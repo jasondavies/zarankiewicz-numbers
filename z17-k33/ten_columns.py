@@ -1,4 +1,7 @@
-"""Test a ten-one row at weight 140. See the proof in degrees-139-140.md."""
+"""Ten-point checks behind the degree bounds at weight 139 in marked-nine.md.
+
+The 16 by 17 replay in ../z16x17-k33 also imports these routines.
+"""
 from collections import Counter
 from itertools import combinations
 from pathlib import Path
@@ -52,27 +55,6 @@ def possible_fives(prefix):
             yield from possible_fives(prefix + [x])
 
 
-def fits_border(cols, candidates):
-    pairs = [x & y for x, y in combinations(cols, 2)]
-    choices = [x for x in candidates if all((x & p).bit_count() <= 2 for p in pairs)]
-
-    def visit(pool, chosen, total):
-        need = 7 - len(chosen)
-        if need == 0:
-            return total >= 62
-        for i, x in enumerate(pool):
-            if (len(pool) - i < need or
-                    sum(y.bit_count() for y in pool[i:i + need]) + total < 62):
-                break
-            rest = [y for y in pool[i + 1:]
-                    if all((x & y & c).bit_count() <= 2 for c in cols + chosen)]
-            if visit(rest, chosen + [x], total + x.bit_count()):
-                return True
-        return False
-
-    return visit(choices, [], 0)
-
-
 def largest_inside_extension(rows):
     # Two rows on an additional column of the marked row may share at most
     # one old column, since they already share the additional column.
@@ -98,15 +80,16 @@ def check_128_core():
 def main():
     check_128_core()
     checked = Counter()
-    # First exclude 69 projected ones, even if the ten columns are chosen
-    # inside a larger marked row. This establishes the global maximum degree 10.
+    # Ten marked entries of a large row need at least 67 projected ones.
+    # Exclude five or six five-sets, so the projected weight is at most 68.
     for f in possible_fives([]):
         m = len(f)
         # 5m + 4q + 3(16-m-q) = 48 + 2m + q.
         if m >= 5:
             assert next(four_cliques(f, 67 - 48 - 2*m), None) is None
-    # Degree 10 is now an upper bound on outside column weights as well.
-    candidates = [x for d in (10, 9, 8) for x in masks(16, d)]
+    # Degree eleven: omit one seven. The projection has four five-sets, twelve
+    # four-sets and loads 6, 6, 7, ..., 7. Restoring the omitted column needs six
+    # rows meeting pairwise in at most one old point, but at most three exist.
     for f in possible_fives([]):
         if len(f) != 4:
             continue
@@ -117,8 +100,6 @@ def main():
                 continue
             checked['ten-column cores'] += 1
             assert largest_inside_extension(f + q) == 3
-            if fits_border(cols, candidates):
-                checked['extendible'] += 1
     print(dict(checked))
     assert checked == {'ten-column cores': 120}
 

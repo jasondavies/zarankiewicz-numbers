@@ -107,7 +107,7 @@ done
 python3 check_final_cores.py
 ```
 
-Use a shell with `set -o pipefail` for the pipeline. The final two numeric arguments to `six_row_core` are the inclusive range of five-block counts. Disjoint ranges may be run independently. To replay the independent completion audit, pass a sixth argument giving the catalogue output path and optionally `--catalogue-only` to skip the primary completion calculation. For example,
+Use a shell with `set -o pipefail` for the pipeline. The final two numeric arguments to `six_row_core` are the inclusive range of five-block counts. Disjoint ranges may be run independently. To replay the independent completion audit, pass a fifth argument giving the catalogue output path and optionally a sixth, `--catalogue-only`, to skip the primary completion calculation. For example,
 
 ```sh
 g++ -O3 -std=c++20 audit_core_catalogue.cpp -o /tmp/audit-nine

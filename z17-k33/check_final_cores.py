@@ -53,6 +53,8 @@ def lower_bound(filename):
 
 
 if __name__ == '__main__':
+    if not __debug__:
+        raise RuntimeError('Run with Python assertions enabled')
     lower_bound('witness-138.txt')
     lower_bound('witness-138-six.txt')
     for p in PREFIXES:

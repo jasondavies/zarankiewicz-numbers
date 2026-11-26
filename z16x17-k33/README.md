@@ -4,6 +4,8 @@ A 16 × 17 binary matrix can have **132 ones** while avoiding an all-ones 3 × 3
 
 The [proof PDF](z16x17-exact.pdf) includes the matrix. The [witness](witness-132.txt) is obtained by deleting the six-one row of the [17 × 17 construction](../z17-k33/witness-138-six.txt). The verifier checks all 380,800 choices of three rows and three columns. Afrasyab had already established the lower bound and recorded the interval from 132 to 133. A subsequent SAT search reported unresolved branches at maximum row degrees nine and ten. [Afrasyab, §3](https://arxiv.org/html/2608.08154v1) · [Earlier SAT search](https://slopdealer.com/research/papers/ml-091/)
 
+In the OEIS this gives a(16) = 133 in [A006621](https://oeis.org/A006621), Zarankiewicz's problem k_3(n,n+1), whose listed terms currently stop at a(12).
+
 ## Upper bound
 
 Suppose a matrix with exactly 133 ones exists. Deleting individual ones from any heavier example would give such a matrix. Write the degree of a row or column for its number of ones.
@@ -41,6 +43,8 @@ From this directory, with Python 3.10 or newer, a C++20 compiler named `c++`, an
 ```sh
 python3 verify_exact.py
 ```
+
+If nauty is not on the compiler's default search paths, as with Homebrew on Apple Silicon, pass them through `CXXFLAGS` and `LDFLAGS`, for example `CXXFLAGS=-I/opt/homebrew/include LDFLAGS=-L/opt/homebrew/lib python3 verify_exact.py`.
 
 The replay uses the [ten-point routines](../z17-k33/ten_columns.py) and [128-one core representative embedded in the previous witness](../z17-k33/bordered-137.txt). It compiles [the catalogue generator](catalogue.cpp) in a temporary directory and checks every projection with [the bitset completion search](completions.py). Both orientations also have a positive control at weight 130. A second implementation derived from the square search was used during the calculation and produced the same two catalogues and exclusions.
 

@@ -8,6 +8,8 @@ The [proof](marked-nine.md) gives the counting argument and the exhaustive cases
 
 In the picture each filled square is a one, and the numbers on the right and below are the row and column degrees. Run `python3 render_witnesses.py` to redraw it from the witness files.
 
+In the OEIS this gives a(17) = 138 in [A350304](https://oeis.org/A350304), 139 in [A001198](https://oeis.org/A001198), 151 in [A350237](https://oeis.org/A350237) and 150 in [A347473](https://oeis.org/A347473).
+
 ## Replay
 
 From this directory, run the following with Python 3.10 or newer, a C++20 compiler available as `c++`, and the nauty development headers and library installed.
@@ -17,3 +19,5 @@ python3 verify_exact.py
 ```
 
 The verifier checks both witnesses, rebuilds the finite catalogues, and checks the upper bound. Its final line ends with `Exact value 138.`
+
+If nauty is not on the compiler's default search paths, as with Homebrew on Apple Silicon, pass them through `CXXFLAGS` and `LDFLAGS`, for example `CXXFLAGS=-I/opt/homebrew/include LDFLAGS=-L/opt/homebrew/lib python3 verify_exact.py`.

@@ -1,4 +1,6 @@
 """Replay the 16 by 17 K3,3-free lower and upper bounds."""
+import os
+import shlex
 import sys
 from collections import Counter
 from itertools import combinations
@@ -38,7 +40,9 @@ def column_bound():
 
 def verify(directory):
     binary = directory / 'catalogue'
-    run(['c++','-O3','-std=c++20',HERE/'catalogue.cpp','-lnauty','-o',binary], check=True)
+    # CXXFLAGS and LDFLAGS can supply include and library paths for nauty.
+    run(['c++',*shlex.split(os.environ.get('CXXFLAGS','')),'-O3','-std=c++20',HERE/'catalogue.cpp',
+         *shlex.split(os.environ.get('LDFLAGS','')),'-lnauty','-o',binary], check=True)
     # These two projections also have independently checked completions at 130.
     controls = {'row':(15,51,89,108,154,165,198,240,312,330,340,353,396,401,418),
                 'column':(3,23,57,106,154,165,198,201,240,269,306,323,344,356,404,424)}
