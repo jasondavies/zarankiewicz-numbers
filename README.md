@@ -12,6 +12,7 @@ The Zarankiewicz number $z(m,n;s,t)$ is the largest number of ones in an $m \tim
 | $z(16,17;3,3) = 132$ | [`z16x17-k33`](z16x17-k33) | Independent proof by marked neighbourhoods. [Wei’s earlier release](https://doi.org/10.5281/zenodo.24553293) gives the same value. |
 | $z(16,18;3,3) = 137$ | [`z16x18-k33`](z16x18-k33) | Independent proof using both sides of a marked line. [Wei’s earlier release](https://doi.org/10.5281/zenodo.24553293) establishes the same value. |
 | $z(17,18;3,3) = 143$ | [`z17x18-k33`](z17x18-k33) | A 143-one witness and a computer-assisted proof excluding 144. |
+| $z(18,18;3,3) = 150$ | [`z18-k33`](z18-k33) | A 150-one square and a computer-assisted proof excluding 151. |
 
 [![The two 17 × 17 witnesses with 138 ones](z17-k33/witnesses.svg)](z17-k33)
 
