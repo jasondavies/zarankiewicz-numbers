@@ -2,6 +2,8 @@
 
 **The maximum is 216.** The [216-one rectangle](witness-216.txt) is obtained by deleting the last row of the [225-one square](../z23-k33/README.md). Here $z$ counts ones in a matrix avoiding an all-ones 3 × 3 submatrix.
 
+In the OEIS this gives a(22) = 217 in [A006621](https://oeis.org/A006621), Zarankiewicz's problem k_3(n,n+1).
+
 The final proof excludes 217 by bounding the sum of incident row excesses on each column, then counting the weighted incidences with nine-rows in two ways. Both possible counts of eight-columns give a contradiction. Run `python3 verify_217.py --jobs 4` for the final projection checks. [Proof of the exact value](exact.md) · [Replay](verify_217.py)
 
 ## Earlier reductions at 217 and 218
@@ -33,6 +35,8 @@ From this directory run the following with Python 3.10+, C++20 and nauty install
 ```sh
 python3 verify_bounds.py --jobs 4
 ```
+
+If nauty is not on the compiler's default search paths, pass its include and library paths through `CXXFLAGS` and `LDFLAGS` as described in the [top-level README](../README.md).
 
 At 217 every column has at least eight ones. A seven-column would extend the unique extremal square, which has no such extension. [22 × 22 classification](../z22-k33/unique.md)
 

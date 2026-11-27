@@ -27,7 +27,7 @@ A [research summary through 22 × 22](results-through-22.md) gives the six conse
 | $z(22,23;3,3) = 216$ | [`z22x23-k33`](z22x23-k33) | Witness and exhaustion excluding 217 |
 | $z(23,23;3,3) = 225$ | [`z23-k33`](z23-k33) | Witness and a row-deletion bound from the 22 × 23 value |
 
-Before this work the best published upper bounds for 17 × 17, 17 × 18 and 18 × 18 were 141, 148 and 156 ([Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf)). The 17 × 18 proof uses the 17 × 17 value, the 18 × 18 proof uses the 17 × 18 value, and the 18 × 19 proof uses both of those. The 19 × 19 bound then follows from the 18 × 19 value by deleting rows. The 19 × 20 proof uses the 18 × 19 and 19 × 19 values. The 20 × 20 bound then follows from the 19 × 20 value by deleting rows. The 19 × 21 proof uses the 18 × 19 and 19 × 20 values together with new bounds of 163 on 18 × 20 and 170 on 18 × 21. The 20 × 21 and 21 × 21 proofs show that a heavier matrix would have one or two parallel lines of degree eight, whose deletion would leave 178 ones on 19 × 21. The 17 × 17 value also gives a short proof that the bipartite Ramsey number $b(2,2,3)$ is 17, first proved by [Rowshan and Gholami](https://arxiv.org/abs/2108.03572).
+Before this work the best published upper bounds for 17 × 17, 17 × 18 and 18 × 18 were 141, 148 and 156 ([Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf)). The 17 × 18 proof uses the 17 × 17 value, the 18 × 18 proof uses the 17 × 18 value, and the 18 × 19 proof uses both of those. The 19 × 19 bound then follows from the 18 × 19 value by deleting rows. The 19 × 20 proof uses the 18 × 19 and 19 × 19 values. The 20 × 20 bound then follows from the 19 × 20 value by deleting rows. The 19 × 21 proof uses the 18 × 19 and 19 × 20 values together with new bounds of 163 on 18 × 20 and 170 on 18 × 21. The 20 × 21 and 21 × 21 proofs show that a heavier matrix would have one or two parallel lines of degree eight, whose deletion would leave 178 ones on 19 × 21. The 21 × 22 proof uses the 20 × 21 and 21 × 21 values, and the 22 × 22 bound follows from the 21 × 22 value by deleting rows. The 22 × 23 proof uses the 21 × 22 value, through an upper bound of 209 on 21 × 23, and the uniqueness of the extremal 22 × 22 square. The 23 × 23 bound then follows from the 22 × 23 value by deleting rows. The 17 × 17 value also gives a short proof that the bipartite Ramsey number $b(2,2,3)$ is 17, first proved by [Rowshan and Gholami](https://arxiv.org/abs/2108.03572).
 
 Three of the first five witnesses extend an earlier matrix by one line, outlined.
 
@@ -37,9 +37,13 @@ The 19 × 20 and 20 × 20 witnesses come from one cyclic square, in which each r
 
 ![Extremal 19 × 20 and 20 × 20 matrices with 171 and 180 ones, both from a cyclic square; an outline marks the row added to the rectangle](figures/cyclic.svg)
 
-The 19 × 21 and 20 × 21 witnesses are rows of one 193-one square.
+The witnesses from 19 × 21 to 22 × 22 all come from one 193-one square. Deleting rows of eight ones gives the two smaller rectangles, and adding a column and then a row gives the two larger matrices.
 
-![Extremal matrices on 19 × 21, 20 × 21 and 21 × 21 with 177, 185 and 193 ones; the two larger ones each add an outlined row of eight ones to the previous one](figures/square-193.svg)
+![Extremal matrices on 19 × 21, 20 × 21, 21 × 21, 21 × 22 and 22 × 22 with 177, 185, 193, 201 and 210 ones; each after the first adds an outlined row or column to the previous one](figures/square-193.svg)
+
+The 22 × 23 and 23 × 23 witnesses come from a 225-one square built from eight orbits of cells under a group of row and column permutations.
+
+![Extremal 22 × 23 and 23 × 23 matrices with 216 and 225 ones; an outline marks the row added to the rectangle](figures/square-225.svg)
 
 ## Bounds under investigation
 
@@ -55,11 +59,11 @@ These results give new terms of the following sequences. Some sequences count th
 
 | Sequence | Name | New term | From |
 |---|---|---|---|
-| [A350304](https://oeis.org/A350304) | Maximum number of 1's in an n X n binary matrix without an all-ones 3 X 3 submatrix | a(17) = 138, a(18) = 150, a(19) = 164, a(20) = 180, a(21) = 193, a(22) = 210 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33`, `z21-k33`, `z22-k33` |
-| [A001198](https://oeis.org/A001198) | Zarankiewicz's problem k_3(n) | a(17) = 139, a(18) = 151, a(19) = 165, a(20) = 181, a(21) = 194, a(22) = 211 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33`, `z21-k33`, `z22-k33` |
-| [A350237](https://oeis.org/A350237) | Minimum number of 1's in an n X n binary matrix with no zero 3 X 3 submatrix | a(17) = 289 − 138 = 151, a(18) = 324 − 150 = 174, a(19) = 361 − 164 = 197, a(20) = 400 − 180 = 220, a(21) = 441 − 193 = 248, a(22) = 484 − 210 = 274 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33`, `z21-k33`, `z22-k33` |
-| [A347473](https://oeis.org/A347473) | Maximum number of nonzero entries allowed in an n X n matrix to ensure there is a 3 X 3 zero submatrix | a(17) = 151 − 1 = 150, a(18) = 174 − 1 = 173, a(19) = 197 − 1 = 196, a(20) = 220 − 1 = 219, a(21) = 248 − 1 = 247, a(22) = 274 − 1 = 273 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33`, `z21-k33`, `z22-k33` |
-| [A006621](https://oeis.org/A006621) | Zarankiewicz's problem k_3(n,n+1) | a(16) = 133, a(17) = 144, a(18) = 157, a(19) = 172, a(20) = 186, a(21) = 202 | `z16x17-k33` (first by Wei), `z17x18-k33`, `z18x19-k33`, `z19x20-k33`, `z20x21-k33`, `z21x22-k33` |
+| [A350304](https://oeis.org/A350304) | Maximum number of 1's in an n X n binary matrix without an all-ones 3 X 3 submatrix | a(17) = 138, a(18) = 150, a(19) = 164, a(20) = 180, a(21) = 193, a(22) = 210, a(23) = 225 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33`, `z21-k33`, `z22-k33`, `z23-k33` |
+| [A001198](https://oeis.org/A001198) | Zarankiewicz's problem k_3(n) | a(17) = 139, a(18) = 151, a(19) = 165, a(20) = 181, a(21) = 194, a(22) = 211, a(23) = 226 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33`, `z21-k33`, `z22-k33`, `z23-k33` |
+| [A350237](https://oeis.org/A350237) | Minimum number of 1's in an n X n binary matrix with no zero 3 X 3 submatrix | a(17) = 289 − 138 = 151, a(18) = 324 − 150 = 174, a(19) = 361 − 164 = 197, a(20) = 400 − 180 = 220, a(21) = 441 − 193 = 248, a(22) = 484 − 210 = 274, a(23) = 529 − 225 = 304 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33`, `z21-k33`, `z22-k33`, `z23-k33` |
+| [A347473](https://oeis.org/A347473) | Maximum number of nonzero entries allowed in an n X n matrix to ensure there is a 3 X 3 zero submatrix | a(17) = 151 − 1 = 150, a(18) = 174 − 1 = 173, a(19) = 197 − 1 = 196, a(20) = 220 − 1 = 219, a(21) = 248 − 1 = 247, a(22) = 274 − 1 = 273, a(23) = 304 − 1 = 303 | `z17-k33`, `z18-k33`, `z19-k33`, `z20-k33`, `z21-k33`, `z22-k33`, `z23-k33` |
+| [A006621](https://oeis.org/A006621) | Zarankiewicz's problem k_3(n,n+1) | a(16) = 133, a(17) = 144, a(18) = 157, a(19) = 172, a(20) = 186, a(21) = 202, a(22) = 217 | `z16x17-k33` (first by Wei), `z17x18-k33`, `z18x19-k33`, `z19x20-k33`, `z20x21-k33`, `z21x22-k33`, `z22x23-k33` |
 
 The listed terms of A006621 stop at a(12). The missing a(13) = 99, a(14) = 113 and a(15) = 124 follow from the exact values $z(13,14;3,3)=98$, $z(14,15;3,3)=112$ and $z(15,16;3,3)=123$ in [Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf).
 

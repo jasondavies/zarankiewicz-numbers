@@ -2,6 +2,8 @@
 
 **The maximum is 225.** The [225-one matrix](witness-225.txt) has five lines of degree nine and eighteen of degree ten on each side. Deleting its last row gives the [216-one rectangle on 22 × 23](../z22x23-k33/witness-216.txt).
 
+In the OEIS this gives a(23) = 225 in [A350304](https://oeis.org/A350304), 226 in [A001198](https://oeis.org/A001198), 304 in [A350237](https://oeis.org/A350237) and 303 in [A347473](https://oeis.org/A347473).
+
 The exact rectangular value gives a short upper bound. Each entry survives 22 of the 23 single-row deletions, so a square of weight $w$ satisfies $22w\le23\cdot216$, or $w\le225$. [Proof that the rectangular maximum is 216](../z22x23-k33/exact.md)
 
 The earlier square proof also works with the weaker rectangular bound. Deleting each row gives an upper bound of 226 from the [rectangular bound of 217](../z22x23-k33/218.md). At 226, local projections force a pair of rows or columns sharing six entries. The refined counts allow that pair in just one orientation, and transposition then excludes the final case. [Proof and replay for 226](exact.md) · [Marked-line restrictions](226.md) · [Earlier independent exclusion of 227](227.md)

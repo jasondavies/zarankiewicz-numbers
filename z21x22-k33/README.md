@@ -2,6 +2,8 @@
 
 The [201-one matrix](witness-201.txt) extends the [193-one square](../z21-k33/witness-193.txt) by one column. The proof uses the previously established maxima of [185 on 20 × 21](../z20x21-k33/README.md) and [193 on 21 × 21](../z21-k33/README.md).
 
+In the OEIS this gives a(21) = 202 in [A006621](https://oeis.org/A006621), Zarankiewicz's problem k_3(n,n+1).
+
 ## Why 202 forces a particular ten-row
 
 Write the weight of a matrix for its total number of ones and the degree of a row or column for its number of ones. Summing the weights after deleting each column in turn bounds the 21 × 22 maximum by ⌊22 · 193 / 21⌋ = 202. The same argument bounds the 20 × 22 maximum by ⌊22 · 185 / 21⌋ = 193. A 202-one matrix on 21 × 22 must therefore have minimum degree nine on both sides.
@@ -21,6 +23,8 @@ Run the joint replay from this directory with Python 3.10+, C++20 and nauty. It 
 ```sh
 python3 verify_exact.py
 ```
+
+If nauty is not on the compiler's default search paths, pass its include and library paths through `CXXFLAGS` and `LDFLAGS` as described in the [top-level README](../README.md).
 
 Every extremal 201-one rectangle contains an extremal 193-one square, obtained by deleting an eight-column. [Proof and replay](smaller-parent.md)
 

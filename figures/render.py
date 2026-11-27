@@ -1,7 +1,8 @@
 """Draw the extremal matrices as three SVG figures, grouped by construction.
 
 chain.svg shows the matrices that extend an earlier one by a line, cyclic.svg the
-cyclic square and its rows, and square-193.svg the rows of the 193-one square.
+cyclic square and its rows, square-193.svg the matrices obtained from the 193-one
+square, and square-225.svg the 225-one square and its rows.
 Where a witness is an earlier matrix plus one line, that line is outlined.
 """
 from pathlib import Path
@@ -49,8 +50,10 @@ FIGURES = {
     'square-193.svg': (
         'Extremal binary matrices with no all-ones 3 by 3 submatrix from one square: '
         '19 by 21 with 177 ones, the 193-one square without its two eight-one rows; '
-        '20 by 21 with 185, the 177-one rectangle plus an outlined eight-one row; and '
-        '21 by 21 with 193, the 185-one rectangle plus an outlined eight-one row.',
+        '20 by 21 with 185, the 177-one rectangle plus an outlined eight-one row; '
+        '21 by 21 with 193, the 185-one rectangle plus an outlined eight-one row; '
+        '21 by 22 with 201, the 193-one square plus an outlined column; and '
+        '22 by 22 with 210, the 201-one rectangle plus an outlined row.',
         [
             [
                 ('z19x21-k33/witness-177.txt', 19, 21, ['193 square without', 'its two eight-rows'],
@@ -59,6 +62,24 @@ FIGURES = {
                  'z19x21-k33/witness-177.txt'),
                 ('z21-k33/witness-193.txt', 21, 21, ['185 rectangle + one row'],
                  'z20x21-k33/witness-185.txt'),
+            ],
+            [
+                ('z21x22-k33/witness-201.txt', 21, 22, ['193 square + one column'],
+                 'z21-k33/witness-193.txt'),
+                ('z22-k33/witness-210.txt', 22, 22, ['201 rectangle + one row'],
+                 'z21x22-k33/witness-201.txt'),
+            ],
+        ],
+    ),
+    'square-225.svg': (
+        'Extremal binary matrices with no all-ones 3 by 3 submatrix from a 225-one square: '
+        '22 by 23 with 216 ones, the square without a nine-one row; and 23 by 23 with 225, '
+        'the 216-one rectangle plus an outlined row.',
+        [
+            [
+                ('z22x23-k33/witness-216.txt', 22, 23, ['225 square without', 'a nine-row'], None),
+                ('z23-k33/witness-225.txt', 23, 23, ['216 rectangle + one row'],
+                 'z22x23-k33/witness-216.txt'),
             ],
         ],
     ),
