@@ -4,7 +4,7 @@ This repository collects exact values of Zarankiewicz numbers. Each value comes 
 
 The Zarankiewicz number $z(m,n;s,t)$ is the largest number of ones in an $m \times n$ binary matrix that contains no all-ones $s \times t$ submatrix. The rows and columns of the submatrix may be any $s$ rows and any $t$ columns, not necessarily adjacent. Equivalently, it is the largest number of edges in a bipartite graph with parts of sizes $m$ and $n$ that has no $K_{s,t}$ subgraph. This repository uses this maximum-ones convention throughout.
 
-A [research summary through 22 × 22](results-through-22.md) gives the six consecutive square values, their adjacent rectangles and the proof dependencies.
+The consolidated paper covers the seven consecutive square maxima from 17 × 17 through 23 × 23, the intervening rectangles, and bounds at order 24. [Paper (PDF)](paper/zarankiewicz-numbers.pdf) · [LaTeX source](paper/zarankiewicz-numbers.tex) · [Earlier summary through 22 × 22](results-through-22.md)
 
 ## Results
 

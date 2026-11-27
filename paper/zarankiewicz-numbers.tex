@@ -1,0 +1,759 @@
+\pdfoutput=1
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,array}
+\usepackage[margin=1in]{geometry}
+\usepackage[colorlinks=true,urlcolor=blue,citecolor=blue]{hyperref}
+\hypersetup{pdftitle={Exact square and near-square Zarankiewicz numbers for K(3,3) through order 23},pdfauthor={Jason Davies}}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newcommand{\code}[1]{\nolinkurl{#1}}
+\newcommand{\proofdir}[2]{\href{https://github.com/jasondavies/zarankiewicz-numbers/blob/381a0d7c62daf76949f03d2bd5908a9d5fafeb92/#1}{#2}}
+\emergencystretch=2em
+\title{Exact square and near-square Zarankiewicz numbers\\for $K_{3,3}$ through order 23}
+\author{Jason Davies\thanks{\href{mailto:jason@jasondavies.com}{\nolinkurl{jason@jasondavies.com}}}}
+\date{November 27, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+We determine the maximum number of ones in an $n\times n$ binary matrix
+avoiding an all-ones $3\times3$ submatrix for $17\le n\le23$. The maxima
+are $138,150,164,180,193,210,225$. We also determine the intervening
+$n\times(n+1)$ maxima for $17\le n\le22$. The extremal $22\times22$
+matrix is unique up to row and column permutations. For the upper bounds
+we mark a line, enumerate the induced families of sets, and test which
+families can carry the remaining entries. At $22\times23$, local bounds
+on the degrees incident with a column give two incompatible counts of the
+same incidences at weight 217. A matrix with 216 ones attains the bound.
+At the next order we obtain $240\le z(24,24;3,3)\le243$.
+\end{abstract}
+
+\noindent\textbf{AI transparency statement.} The author directed an
+AI-assisted investigation. AI systems developed proofs and verification
+programs and drafted this article. The upper bounds are computer-assisted.
+The scope of the checks is described in Section~\ref{sec:replay}.
+
+\section{Introduction}
+Let $z(m,n)$ be the largest number of ones in an $m\times n$ binary matrix
+in which no three distinct rows have ones in the same three distinct columns.
+Equivalently, it is the maximum number of edges in a $K_{3,3}$-free bipartite
+graph with parts of sizes $m$ and $n$. Thus $z(m,n)=z(n,m)$. We use the
+maximum-ones convention throughout. The least number of ones forcing a
+forbidden submatrix is $z(m,n)+1$.
+
+\begin{theorem}\label{thm:main}
+The square and rectangular maxima are as follows.
+\[
+\begin{array}{c@{\qquad}rrrrrrr}
+\toprule
+n&17&18&19&20&21&22&23\\
+\midrule
+z(n,n)&138&150&164&180&193&210&225\\
+z(n-1,n)&132&143&156&171&185&201&216\\
+\bottomrule
+\end{array}
+\]
+The extremal $22\times22$ matrix is unique up to independent
+permutations of its rows and columns.
+\end{theorem}
+
+The first rectangular entry was determined by Wei~\cite{wei}. Four of the
+seven square upper bounds follow immediately from the preceding rectangle
+by averaging the weights after a row deletion.
+One auxiliary value, $z(19,21)=177$, has two uses: an extra eight-one line
+would be needed to exceed 185 on $20\times21$, and two such parallel lines
+would be needed to exceed 193 on $21\times21$. In both cases removing the
+lines would leave 178 on $19\times21$. In contrast, once the $22\times23$
+bound is known, the upper bound of 225 on the next square follows by a
+single averaging argument.
+
+\paragraph{Earlier bounds.}
+Table~4 of Collins, Riasanovsky, Wallace and Radziszowski~\cite{crwr}
+gives upper bounds of 141, 148 and 156 on $17\times17$, $17\times18$ and
+$18\times18$, respectively. Padhi~\cite{padhi} had already obtained the
+lower bound of 138 on $17\times17$. Afrasyab~\cite{afra} gave
+$132\le z(16,17)\le133$. Wei~\cite{wei} established $z(16,17)=132$ and
+$z(16,18)=137$. Independent marked-line proofs for Wei's two values are
+included in the accompanying repository~\cite{code}. The 137-one
+witness there extends Hou's 132-one matrix on $15\times18$~\cite{hou}.
+The provenance of the first entries is summarized below.
+\begin{center}\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Size & Earlier bound or exact value & Result used here\\
+\midrule
+$16\times17$ & $132$ exactly (Wei) & independent verification\\
+$16\times18$ & $137$ exactly (Wei) & input for $17\times18$\\
+$17\times17$ & $138$ (Padhi) to $141$ (Collins et al.) & upper bound $138$\\
+$17\times18$ & upper bound $148$ (Collins et al.) & exact value $143$\\
+$18\times18$ & upper bound $156$ (Collins et al.) & exact value $150$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+A consequence is the upper bound $b(2,2,3)\le17$: two $K_{2,2}$-free
+colour classes on $17\times17$ have at most 74 cells each~\cite{crwr},
+and $74+74+138<289$. Together with the known lower bound this recovers
+the equality proved by Rowshan and Gholami~\cite{rg}.
+
+\section{Marking a line}\label{sec:mark}
+A \emph{line} is a row or a column. Its degree is its number of ones.
+The weight of a matrix is the sum of its row degrees. Erasing a one
+preserves avoidance, so an exclusion at one weight excludes every larger
+weight on the same dimensions. If a matrix of weight $w$ has $m$ rows,
+then each one survives $m-1$ of its $m$ single-row deletions. Consequently
+\begin{equation}\label{eq:delete}
+(m-1)w\le m\,z(m-1,n),\qquad d_r\ge w-z(m-1,n)
+\end{equation}
+for each row degree $d_r$. The transpose gives the column versions.
+
+\begin{lemma}\label{lem:mark}
+Mark $t$ columns in the support of one row. Restrict each other row to
+these columns and regard the result as a block on $t$ points. Two blocks
+intersect in at most two points. The load of point $j$, its number of
+occurrences in the blocks, is $c_j-1$, where $c_j$ is its column degree.
+If two rows share $u$ columns, the sum of degrees of those columns is
+at most $2u+2(m-2)$ in a matrix with $m$ rows.
+\end{lemma}
+\begin{proof}
+Three common points of two blocks give three common entries of their
+rows and the marked row. For the last assertion the two rows contribute
+$2u$ entries on the shared columns and each other row contributes at most
+two.
+\end{proof}
+
+To enumerate the blocks, begin with all possible families of the largest
+allowed size, often five. Adjoin smaller blocks in descending order.
+A block of size three or more cannot repeat. A block of size at most two
+can repeat, and the empty block accounts for a row missing the mark.
+Permuting the points or the blocks gives an equivalent projection. We
+canonicalize the bipartite incidence graph with points and blocks in
+separate vertex classes using nauty~\cite{nauty}. Repeated blocks have
+distinct vertices. In particular the enumeration must include the empty
+family of five-blocks whenever the load bound permits it.
+
+For a mark comprising the entire support of a row, the missing columns
+avoid that row. On the remaining rows generate column supports $S$ of the
+permitted sizes. For each pair of fixed columns $A,B$ require
+$|S\cap A\cap B|\le2$. Upon choosing a column impose the same test on all
+newly formed pairs. This checks exactly the triples involving a new
+column. If the mark uses only part of the row, a missing column through
+that row can use only blocks with pairwise intersection at most one.
+The completion tests which exclude this possibility explicitly check how
+many such blocks can be chosen.
+
+\paragraph{Choosing a mark.}
+Give column $j$ a weight $e_j$ and set $W_r=\sum_{j\sim r}e_j$, where
+$j\sim r$ denotes a one. The identity
+\begin{equation}\label{eq:weights}
+\sum_r W_r=\sum_j c_j e_j
+\end{equation}
+can force a row with high incident weight even when ordinary averaging
+only gives its degree. With $e_j=c_j-b$ and nonnegative weights, a
+degree-$t$ row of incident weight $W_r$ gives a projection of total load
+$(b-1)t+W_r$. Thus each extra unit forced by~\eqref{eq:weights} raises
+the threshold in the block enumeration.
+
+\section{The maxima through order 21}\label{sec:early}
+Here and below the accompanying finite enumerations are part of the proof.
+Appendix~\ref{app:files} identifies their inputs and entry points. We
+describe the covering arguments since an empty list of completions gives
+an upper bound only if every hypothetical matrix has a mark on the list.
+
+\paragraph{The first square.}
+At weight 139 on $17\times17$, deletion and the bounds of~\cite[Table~4]{crwr}
+at heights 16, 15, 14 and 13 give minimum degree six and total deficit
+below eight at most three on each side. Indeed there cannot be two sixes,
+one six and two sevens, or four sevens on the same side. Six common
+columns of two rows would need at least $48-3=45$ entries, exceeding
+the capacity $12+2\cdot15=42$. Marking ten entries of a long line
+now gives blocks of size at most five and total load at least 67.
+For the five-blocks the $\{\pm1\}$ incidence vectors have squared norm
+ten and mutual inner products at most $-2$. The squared norm of their
+sum bounds their number by six. Enumerating the compatible fours and
+the remaining blocks first excludes degrees above ten, then leaves
+519 relabelling keys for a mark of degree ten. None extends.
+
+For this argument the inputs at heights $16,15,14,13$ are, in order,
+$133,126,118,110$ as upper bounds on seventeen columns. The six-row
+case also uses the published uniqueness of the 128-one $16\times16$
+matrix. A column of degree five in a 133-one core would have to extend
+that square. Testing its $\binom{16}{5}$ possible supports in each
+orientation excludes such an extension.
+
+The remaining lines have degrees six through nine. If a six exists,
+transpose as needed and delete a six-row. Otherwise delete a seven-row
+if one exists. The respective $16\times17$ cores have 133 and 132 ones,
+so each has a nine-row. Mark a nine-column if available and otherwise a
+nine-row. With minimum degree eight on both sides of the original matrix,
+mark a nine-column in the full square. These cases exhaust the possible
+degrees. Completing the nine-point projections, including restoration
+of the deleted row when present, excludes 139. The repository gives
+two witnesses for 138, distinguished even up to transposition by their
+maximum line degrees, ten and nine.
+
+\paragraph{The next three rectangles and squares.}
+At 144 on $17\times18$ a degree-nine column can be forced and no
+column has greater degree. Project onto the nine rows containing the
+mark or the eight rows missing it, according to the weight on each
+side. Let $S$ denote the weight on the nine incident rows away from
+the column. At $S\ge65$ the inside enumeration gives 3,671,498
+projections. Otherwise the eight outside rows have at least 71 ones.
+Their minimum degree is seven, eight or nine, giving respectively
+7,298,758, 12,057,949 and 825 projections. These four cases give
+23,029,030 in total. None
+completes. Appending a five-one column to the second 138-one square gives
+143. At 151 on $18\times18$ every degree is at least eight. Marking
+eleven points on a largest line of degree at least eleven requires nine
+five-blocks among seventeen blocks, with total load at least 77. No
+such projection has the required loads. For maximum degrees ten and
+nine there are respectively 978 and 1,821 projections of the required
+types. In the latter case a nine-column meeting at least three nine-rows
+is forced. None completes. The 150-one witness has three lines of
+degree ten and fifteen of degree eight on each side.
+
+At 157 on $18\times19$ the search marks a row after removing columns
+of degree seven. The separate cases for zero and one such column and
+the bounds on the smaller rectangles leave two through nine columns
+to restore. A compatible single column need not extend to the required
+family of columns. For example, in a cross-check with three columns
+removed, 313 of 5,964 completed cores accepted one column and none
+accepted three. The completed enumeration excludes 157 for each
+number removed. Two witnesses give 156. One accepts an eight-one row
+to give 164 on $19\times19$, attaining the bound
+$\lfloor19\cdot156/18\rfloor$.
+
+At 172 on $19\times20$, all degrees are at least eight, and an eight-row
+and an eight-column cannot meet: deleting both would leave 157 ones on
+$18\times19$. If there is an eight-row, its eight columns have degree
+at least nine. It gives 114 possible marks, none of which completes.
+Otherwise the rows have degrees $10,9,\ldots,9$. Marking ten rows
+on any column of degree at least ten gives an empty catalogue. There
+must then be a nine-column through the ten-row, and its 81 possible
+projections all fail to complete. Thus $z(19,20)\le171$ and
+$z(20,20)\le180$ by~\eqref{eq:delete}. For the lower bounds take all
+translates of $\{0,2,3,6,7,8,9,11,15\}$ in $\mathbb Z/20\mathbb Z$
+as rows, and delete a row for the rectangle. Direct triple intersection
+gives the required avoidance.
+
+\paragraph{One exhaustion for three values.}
+At weight 178 on $19\times21$ let $s$ be the number of seven-columns.
+Every column has degree at least seven, and deleting three seven-columns
+would leave 157 on $19\times18$. Thus $0\le s\le2$. Remove all $s$.
+The remaining column degrees have the form $8+e_j$ and the core row
+degrees are at least eight, by the respective 18-row bounds 170, 163 and
+156. The sum of the $e_j$ is $10+s$. For a row of degree $d$ the
+projection has load $7d+W_r$. The two searches mark a row maximizing
+$d+W_r$ or $2d+W_r$. Applying~\eqref{eq:weights} and the point-load
+bounds gives the finite cases below. The counts include different
+choices of mark for the same core.
+\[
+\begin{array}{lrrr}
+\toprule
+s&0&1&2\\
+\midrule
+\text{Marked cases}&155{,}847&174{,}743&184{,}800\\
+\text{Extensions to weight 178}&0&0&0\\
+\bottomrule
+\end{array}
+\]
+The reductions at 186 on $20\times21$ and 194 on $21\times21$ force,
+respectively, one eight-row and two parallel eight-lines (transposing if
+necessary) whose removal gives exactly this 178-one case. This yields
+the three upper bounds 177, 185 and 193. For the reverse inequalities,
+start with the 193-one square and delete one or both of its eight-rows.
+Details of the two score bounds and the reductions appear in the
+\proofdir{z19x21-k33/README.md}{178-one exhaustion} and
+\proofdir{z20x21-k33/weight-186.md}{eight-line reductions}.
+
+\section{A 159-case proof at \texorpdfstring{$21\times22$}{21 by 22}}\label{sec:201}
+\begin{proposition}
+$z(21,22)=201$ and $z(22,22)=210$.
+\end{proposition}
+\begin{proof}
+A column extends the 193-one square to 201. An additional row gives 210.
+For the upper bounds,~\eqref{eq:delete} gives $z(21,22)\le202$ from
+$z(21,21)=193$, and $z(20,22)\le193$ from $z(20,21)=185$.
+Hence at weight 202 every row and column has degree at least nine.
+Lemma~\ref{lem:mark} bounds pair intersections by five on both sides.
+
+If a row has degree at least eleven, mark eleven of its entries. The
+twenty blocks have total load at least 88 and size at most five. There
+must be at least eight five-blocks. There are six compatible families
+of at least eight five-blocks on eleven points up to relabelling.
+For a family of size $m$, one needs at least $28-2m$ compatible
+four-blocks, since the total load with $q$ fours is at most $60+2m+q$.
+None of the six families admits them. Thus all rows have degree nine
+or ten, with thirteen of degree ten.
+
+Write $c_j=9+e_j$. Then $\sum e_j=4$. If one $e_j\ge2$, that column
+must meet a ten-row, since it has degree at least eleven and there
+are only eight nine-rows. Otherwise four columns have degree ten.
+If every ten-row met at most one of the four, the eight nine-rows
+would supply at least $40-13=27$ entries on them. By discrete convexity
+the number of column triples on these rows would be at least
+$5\binom33+3\binom43=17$, whereas the available capacity is
+$2\binom43=8$. Either way a ten-row has $W_r\ge2$.
+
+Mark that row. Its twenty blocks on ten points have point loads
+from eight to twelve and total load at least 82. There are 159
+canonical projections. The twelve missing columns avoid the marked
+row. They have degrees from nine to eleven, because at most two excess
+units remain outside the mark. Testing compatible supports as in
+Section~\ref{sec:mark} gives zero completions to weight 202.
+Finally $z(22,22)\le\lfloor22\cdot201/21\rfloor=210$.
+\end{proof}
+
+\paragraph{Classification at equality.}
+In a 210-one square all degrees are at least nine. Give a column
+weight $c_j-9$. A row of degree at least eleven has incident weight at
+most one: otherwise its eleven heaviest points give one of 338
+projections of load at least 90, none of which extends. The same
+restriction holds on transposing. Thus a degree-$d$ row with $d\ge11$
+requires at least $d-1$ nine-columns. Two such rows can share at
+most five of these, and three can share at most two. Distributing
+their required incidences among the nine-columns and applying the
+same bounds on the other side leaves seven pairs of degree profiles
+up to transposition. In each case~\eqref{eq:weights} forces a ten-row
+of incident weight at least five or a nine-row of weight at least eight.
+
+The ten-row gives 13,205 projections. Exhausting their completions
+returns one square. To enumerate the nine-row marks, omit a point of
+least degree, enumerate eight-point projections, then restore the point
+on blocks meeting pairwise in at most one point. This gives 81 distinct
+nine-point projections, all without completions. The resulting square
+agrees up to relabelling with the 210-one witness. In either orientation
+none of its $\binom{22}{7}$ proposed seven-point column extensions is
+admissible. The classification and this last test are both used in
+the next rectangle. See the \proofdir{z22-k33/unique.md}{classification
+at weight 210} for the seven profiles and the reconstruction.
+
+\section{The last rectangle}\label{sec:217}
+Figure~\ref{fig:witness} gives a 225-one square. Its last row has nine
+ones, so the other rows attain 216. We now exclude a $22\times23$ matrix
+of weight 217. A row of degree nine will be called a nine-row, and
+similarly for other degrees and for columns.
+
+\begin{lemma}[Degree restrictions at 217]\label{lem:input}
+Every row has degree at least nine. There are $k=1$ or $2$ eight-columns,
+and all other columns have degree at least nine. Each eight-column
+contains at most one nine-row. There are at least seven nine-rows.
+A nine-row avoiding the eight-columns satisfies $\sum_{j\sim r}(c_j-9)\le6$.
+A ten-column meets at least three nine-rows, and a column of degree
+$c\ge11$ meets at least $c-5$.
+\end{lemma}
+
+We give the reductions behind this computational lemma, since using
+only ordinary deletion bounds at this step would allow too many profiles.
+A column of degree below seven would leave more than 210 on deletion.
+Degree seven is impossible by the extension test on the unique square.
+For the row bound one needs $z(21,23)\le208$. At weight 209 the
+degree and projection tests force four or five eight-columns, say $q$,
+and every nine-row avoids them. Write $b$ for the number of nine-rows.
+On columns of degree at least ten give each entry weight $c-9$.
+Those column weights sum to $q+2$, each column meets at least three
+nine-rows, and each nine-row carries weight at most three. Hence
+$b\ge q+2$. On each eight-column the sum of the incident row degrees
+minus ten per incidence is at most three. A row of degree $10+s$,
+$s>0$, needs at least $s+2$ eight-columns. Summing its excesses on
+these columns gives $3(b-1)\le3q$: the positive row surplus above ten
+sums to $b-1$, and no nine-row meets these columns. The two inequalities
+are incompatible. The computations supplying these local bounds are
+itemized in the \proofdir{z21x23-k33/no-209.md}{209-one exclusion}.
+Deleting a row at weight 217 now proves the row bound.
+
+On $22\times23$ an all-high-degree column side is ruled out by
+\proofdir{z22x23-k33/min9.md}{weighted marks}. Deleting eight-columns
+then leaves weights $209,201,193,185$ after one through four deletions.
+The smaller rectangular bounds and the
+\proofdir{z22x23-k33/eight-column-count.md}{eight-column count} exclude
+five or more. The \proofdir{z22x23-k33/four-column-cover.md}{four-column
+test} and the \proofdir{z22x23-k33/three-profile-proof.md}{three-column
+test} exclude four and three. Deleting one eight-column leaves a
+209-one square with at most one eight-row, since deleting an eight-row
+of that square leaves 201 on $21\times22$ with minimum row degree nine.
+This proves the asserted incidence bound on the eight-column.
+
+Three further marked cases are needed. An eight-column with incident
+row-degree sum at least 84 gives 900 projections. A ten-column with
+two nine-rows and eight ten-rows gives 23,526. A nine-row avoiding
+the eight-columns with incident excess exactly seven gives 15,766.
+None completes. Together with the earlier high-degree marks these
+tests give the excess bound of six, at least three nine-rows on a
+ten-column, and at most five rows of degree above nine on any longer
+column. If there are at most five nine-rows, all positive column excess
+is on $10+k$ ten-columns. These require $3(10+k)$ incidences with the
+nine-rows, which can supply at most thirty. For a nine-row touching
+an eight-column, the latter capacity follows by deleting that column
+and then the residual eight-row: the resulting 201-one rectangle
+needs at least three eight-columns, forcing the original nine-row to
+meet at least $4-k$ nine-columns.
+
+At exactly six nine-rows the \proofdir{z22x23-k33/six-nine-rows.md}{incidence
+count} forces all columns to have degree eight, nine or ten. There are
+three units of positive row surplus above degree ten. If a ten-column
+meets exactly three nine-rows and a longer row, the mark consists of
+three nine-rows, six ten-rows and one eleven-row. A second longer row
+would require one eleven-row and eight further rows of degree at least
+ten outside this mark. None of its 129,226 projections admits even the
+corresponding partial placement. For clarity, let $m'$ count nine-rows on a ten-column. With two
+eight-columns, all these counts equal three. With one eight-column,
+the sum of $m'-3$ over the eleven ten-columns is at most two.
+A ten-column with $m'>3$ can hold at most $m'-2$ units of row excess
+above ten. If at least two long rows exist, all their ten-column
+incidences must now lie on these exceptional columns. They have room
+for at most four such incidences, whereas two long rows together need
+at least five: even counting multiplicities, they can use at most
+seventeen positions outside the ten-columns. A single long row would
+have degree thirteen and could meet only ten-columns with $m'\ge5$.
+There are none if $k=2$. For $k=1$ there is at most one, forcing the
+row to use all twelve columns outside the tens. A ten-row avoiding the
+eight-column needs at least six nine-columns. Two rows could not share
+those six, by Lemma~\ref{lem:mark} and their total degrees on those
+columns. Details of these capacities and the six-row case are in the
+\proofdir{z22x23-k33/seven-nine-rows.md}{six-nine-row exclusion}.
+This completes the reductions used in Lemma~\ref{lem:input}.
+
+\begin{lemma}[Column scores]\label{lem:score}
+Give row $r$ weight $d_r-9$ and define $W_j=\sum_{r\sim j}(d_r-9)$.
+At weight 217,
+\[
+\begin{array}{c|ccc}
+c_j&8&9&\ge10\\ \hline
+W_j\text{ at most}&11&9&7 .
+\end{array}
+\]
+\end{lemma}
+\begin{proof}
+The 900-projection exclusion gives $W_j\le83-8\cdot9=11$ for an
+eight-column. Any two columns share at most five rows. Indeed, six
+shared rows need at least 54 ones. Their two columns and the other
+21 columns supply at most $12+21\cdot2=54$. Equality forces every
+one of the six rows to have degree nine and each remaining column to
+meet exactly two of them. An eight-column would then meet either six
+or two nine-rows, contradicting Lemma~\ref{lem:input}.
+
+Each row has degree at most fifteen. If it meets $t$ columns of degree
+at least nine, it shares at least $8t$ incidences on those columns
+with the 21 other rows. No other row shares six such columns, by
+Lemma~\ref{lem:mark} and $6\cdot9>12+20\cdot2$. Hence $8t\le105$ and
+the at most two eight-columns give the bound.
+
+For a nine-column of score at least ten mark all nine points. For a
+column of degree at least ten and score at least eight mark its ten
+heaviest incident rows. These retain at least eight units of score,
+since weights are nonnegative integers. The 22 other columns give
+blocks of size at most five. The loads lie between eight and fourteen.
+Catalogue all block multisets with the indicated minimum total.
+A ten-point mark of score at least nine with at least five
+positive-weight points was already excluded by the earlier
+\proofdir{z22x23-k33/min9.md}{ten-point test}.
+\[
+\begin{array}{rrrrr}
+\toprule
+\text{Points}&\text{Minimum load sum}&\text{Projections}&
+  \text{Remaining}&\text{Passing}\\
+\midrule
+9&82&60{,}469&60{,}469&0\\
+10&88&453{,}448&452{,}058&0\\
+\bottomrule
+\end{array}
+\]
+
+There are two tests. For a column of degree greater than ten, a further
+row on the column needs eight of the outside columns. Their blocks must
+meet pairwise in at most one marked point. No remaining ten-point mark
+admits an eight-clique in this compatibility graph. For a full mark of
+$p=9$ or $10$ points, write $M$ for the total of the marked row degrees,
+and let $h$ of those rows have degree nine. The $22-p$ outside rows
+need a gain of $217-M-9(22-p)$ above their baseline of nine each.
+At most $22-p-\max(0,7-h)$ of them can supply gain. Enumerate the
+supports of degrees ten to fifteen on the 22 outside columns. Choose
+compatible longer rows in decreasing degree order, then ten-rows,
+testing each new triple. Two equal supports of size ten would share at
+least eight columns of degree at least nine, already impossible.
+A completion must attain the required gain within the available number
+of rows. No projection in either row of the table passes this test.
+\end{proof}
+
+\begin{proposition}\label{prop:last}
+$z(22,23)=216$ and $z(23,23)=225$.
+\end{proposition}
+\begin{proof}
+Suppose there are 217 ones. Write $a$ for the number of nine-rows and
+$m$ for the number of columns of degree at least ten. On the latter
+columns put $e_j=c_j-9$, $E=\sum e_j=10+k$ and $D=\sum(e_j-1)=E-m$.
+The rows above degree nine have degrees $10+s_r$, where $s_r\ge0$ and
+$\sum s_r=a-3$. Summing the scores of Lemma~\ref{lem:score} first by
+rows and then by columns gives
+\begin{align*}
+\sum_j W_j
+ &=10(22-a)+11\sum s_r+\sum s_r^2\ \ge\ 184+2a,\\
+\sum_j W_j
+ &\le11k+9(23-k-m)+7m=207+2k-2m .
+\end{align*}
+Here $s_r^2\ge s_r$. Integrality gives $a+m\le11+k$, or $a\le D+1$.
+
+Now let $T$ count incidences between the nine-rows and the $m$ columns,
+each incidence counted with weight $e_j$. A column of weight one
+contributes at least three. A column of weight $e\ge2$ meets at least
+$e+4$ nine-rows, and
+\[
+ e(e+4)-3e-6(e-1)=(e-2)(e-3)\ge0.
+\]
+Hence $T\ge3E+6D$. A nine-row avoiding the eight-columns contributes
+at most six. At most $k$ nine-rows meet an eight-column, and each can
+contribute at most $E\le12$. Thus $T\le6a+6k\le6D+6+6k$.
+Together these require $3(10+k)\le6+6k$, so $k\ge8$. This
+contradicts $k\in\{1,2\}$. The witness attains 216. Applying
+\eqref{eq:delete} gives $z(23,23)\le\lfloor23\cdot216/22\rfloor=225$,
+also attained.
+\end{proof}
+
+% The following figure is drawn directly from the witness bits. Rows run
+% top to bottom and columns left to right. No external graphics are needed.
+\makeatletter
+\newcount\gridx
+\newcommand{\gridrow}[2]{\gridx=0\relax
+  \@tfor\digit:=#2\do{\ifnum\digit=1\relax
+    \put(\the\gridx,#1){\rule{\unitlength}{\unitlength}}\fi
+    \advance\gridx by 1\relax}}
+\makeatother
+\begin{figure}[htbp]
+\centering
+{\setlength{\unitlength}{4pt}
+\begin{picture}(21,21)
+\gridrow{20}{110101000001000101010}
+\gridrow{19}{100100001111110001100}
+\gridrow{18}{001110000101101110010}
+\gridrow{17}{011010010001100001101}
+\gridrow{16}{000011000011011000111}
+\gridrow{15}{110011001100101100001}
+\gridrow{14}{001001111001011101000}
+\gridrow{13}{100000110011100110001}
+\gridrow{12}{111110010010011000000}
+\gridrow{11}{111000100101010000011}
+\gridrow{10}{010100100000011111101}
+\gridrow{9}{010000011101001010100}
+\gridrow{8}{010001010110110011010}
+\gridrow{7}{101000001010001011011}
+\gridrow{6}{101011100100000011100}
+\gridrow{5}{010111101011000010000}
+\gridrow{4}{011000101010100100110}
+\gridrow{3}{100010011000010110110}
+\gridrow{2}{000110111100000001011}
+\gridrow{1}{100101110000101000110}
+\gridrow{0}{001101010110000100101}
+\end{picture}}\qquad {\setlength{\unitlength}{4pt}
+\begin{picture}(23,23)
+\gridrow{22}{01000111010010001001011}
+\gridrow{21}{11001100110010110000100}
+\gridrow{20}{01101001001110000010110}
+\gridrow{19}{11111011000000100100001}
+\gridrow{18}{00111000010110111001000}
+\gridrow{17}{01010000001000111010111}
+\gridrow{16}{01100000100011010111001}
+\gridrow{15}{00001110000100100111101}
+\gridrow{14}{00011100101010001100010}
+\gridrow{13}{00100101101100110000011}
+\gridrow{12}{01000001110101101110000}
+\gridrow{11}{10010010110110000010011}
+\gridrow{10}{01011110000101010000010}
+\gridrow{9}{00011001111001000001101}
+\gridrow{8}{10100000010001100101110}
+\gridrow{7}{10000001000111011100101}
+\gridrow{6}{10001011100000011011010}
+\gridrow{5}{10101100011001001010001}
+\gridrow{4}{10010101001011100011000}
+\gridrow{3}{00110111010000010110100}
+\gridrow{2}{11000010011100010101000}
+\gridrow{1}{11110100100100001001100}
+\gridrow{0}{00100010101011101000100}
+\end{picture}}
+\caption{Extremal squares of weights 193 (left) and 225 (right).
+Removing the two eight-rows of the first square gives 177 on $19\times21$.
+Removing the last row of the second gives 216 on $22\times23$.
+Each black cell is a one.}\label{fig:witness}
+\end{figure}
+
+\section{The next order}\label{sec:24}
+There is a short cyclic construction one order further. In
+$\mathbb Z/24\mathbb Z$ take the translates of
+$\{0,1,2,3,5,8,11,13,17,18\}$. Every triple of translates has
+intersection of size at most two. This gives 240 ones on the square
+and 230 after deleting any row. Column deletion gives
+$z(23,24)\le\lfloor24\cdot225/23\rfloor=234$.
+
+\begin{proposition}
+$z(24,24)\le\max\{240,z(23,24)+9\}\le243$.
+\end{proposition}
+\begin{proof}
+Above weight 240 some row has at least eleven entries. Suppose every
+column has degree at least ten and mark eleven entries of that row.
+A six-point block would require 60 incidences on its six columns,
+above their capacity $12+22\cdot2=56$. Thus the 23 blocks have sizes
+at most five, and total load at least $11\cdot9=99$. Write $m$ and $q$
+for the number of fives and fours. Counting first relative to four,
+then to three, gives $m\ge7$ and $q\ge30-2m$. There are 21 compatible
+families with at least seven fives on eleven points up to relabelling.
+For each, enumerate the choices of $30-2m$ pairwise compatible fours.
+Only $m=7$ contributes, so all 23 blocks are specified. Of the
+18 choices on the representative families, thirteen have minimum point
+load eight and five have minimum seven. None reaches nine. Hence a
+column of degree at most nine exists. Delete it and use transposition.
+\end{proof}
+
+At weight 234 on $23\times24$ every column has degree at least nine
+and at least six have degree exactly nine. Each such deletion would
+leave an extremal 225-one square. In both orientations of the stored
+square exactly one five-point column extension is admissible, and
+none of size six is. A 234-one rectangle would therefore require a
+different 225-one square. Whether another 225-one square admits such an extension remains open in this analysis.
+
+\section{Computational checks}\label{sec:replay}
+For a lower bound, encode every row as an integer with a bit for each
+column. An independent witness check consists of summing the bit counts
+of the rows, then checking
+$\operatorname{popcount}(r_i\mathbin{\&} r_j\mathbin{\&}r_k)\le2$ for
+each $i<j<k$. For the preparation of this article all 18 stored witness
+files were checked in both orientations from a clean export of the
+revision in~\cite{code}. The eight-orbit construction of the 225-one
+square can also be regenerated with \code{z23-k33/construct.py}. Clean-export replays for this article
+also recovered the 171-one and 201-one bounds, the unique 210-one square,
+and the two final catalogues excluding weight 217. Other enumeration
+counts are reported from the individual proof records in~\cite{code}.
+
+For an upper bound there are three separate claims to check: a line or
+deletion of the asserted kind must exist, the catalogue must contain
+every possible projection at that mark, and the completion test must
+retain any valid completion. The numerical counts in the tables refer
+to the indicated stage of the search. A positive control for the last
+column-score calculation hides rows in the 216-one witness and recovers
+a compatible placement. The final two exclusions can be run with
+\begin{verbatim}
+cd z22x23-k33
+python3 verify_217.py --jobs 4
+\end{verbatim}
+This command checks the two rows of the table in Lemma~\ref{lem:score}.
+The directory's proof index records the separate verifications on
+which the degree restrictions depend. The final proof of
+$z(21,23)\le208$ uses incidence counts, so the large DRAT archives for
+the earlier individual four-column case are unnecessary for
+Theorem~\ref{thm:main}. Replays use Python 3.10 or later, a C++20
+compiler and nauty. These are program-checked finite searches. Their
+correctness depends on the coverage arguments, the enumerators and the
+completion routines.
+
+\appendix
+\section{Guide to the finite computations}\label{app:files}
+All paths below are relative to the repository in~\cite{code}. The
+linked notes specify the degree inequalities, branching rules,
+multiplicities, and counts for their respective computations. Parameters
+and counts refer to the same revision.
+
+\begin{center}\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Target or input & Computational step & Replay or proof index\\
+\midrule
+$17\times17$ & Six-, seven-, and nine-line cases
+ & \proofdir{z17-k33/verify_exact.py}{\code{z17-k33/verify_exact.py}}\\
+$17\times18$ & Both sides of a nine-column
+ & \proofdir{z17x18-k33/verify_exact.py}{\code{z17x18-k33/verify_exact.py}}\\
+$18\times18$ & Marks of size 9, 10, 11
+ & \proofdir{z18-k33/verify_exact.py}{\code{z18-k33/verify_exact.py}}\\
+$18\times19$ & Joint seven-column extension
+ & \proofdir{z18x19-k33/verify_exact.py}{\code{z18x19-k33/verify_exact.py}}\\
+$19\times20$ & Marks in both orientations
+ & \proofdir{z19x20-k33/verify_exact.py}{\code{z19x20-k33/verify_exact.py}}\\
+$19\times21$ & Three counts of seven-columns
+ & \proofdir{z19x21-k33/verify_weight_178.py}{\code{z19x21-k33/verify_weight_178.py}}\\
+$20\times21$, $21\times21$ & Reductions to 178
+ & \proofdir{z20x21-k33/weight-186.md}{\code{z20x21-k33/weight-186.md}}\\
+$21\times22$ & Marked ten-row
+ & \proofdir{z21x22-k33/verify_exact.py}{\code{z21x22-k33/verify_exact.py}}\\
+$22\times22$ & Census at 210
+ & \proofdir{z22-k33/verify_unique.py}{\code{z22-k33/verify_unique.py}}\\
+$21\times23$ & Exclusion of 209
+ & \proofdir{z21x23-k33/no-209.md}{\code{z21x23-k33/no-209.md}}\\
+$22\times23$ & Number of eight-columns
+ & \proofdir{z22x23-k33/README.md}{\code{z22x23-k33/README.md}}\\
+ & Local degree restrictions
+ & \proofdir{z22x23-k33/verify_217_loads.py}{\code{z22x23-k33/verify_217_loads.py}}\\
+ & Exclusion of six nine-rows
+ & \proofdir{z22x23-k33/verify_six_nines.py}{\code{z22x23-k33/verify_six_nines.py}}\\
+ & Final column-score bounds
+ & \proofdir{z22x23-k33/verify_217.py}{\code{z22x23-k33/verify_217.py}}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For the small calculation in Section~\ref{sec:24} the following
+pseudocode uses \code{z17x18-k33/fives.cpp} and the clique iterator in
+\code{z17x18-k33/verify.py}, both in the cited revision. Compatibility
+means intersection of size at most two. The outer loop visits each
+family size, including the nonmaximal families.
+\begin{verbatim}
+for F in canonical compatible families of at least seven
+         5-subsets of an 11-set:
+    P = all 4-subsets compatible with every member of F
+    for Q in cliques(P, size = 30 - 2*len(F)):
+        assert len(F) == 7 and len(Q) == 16
+        assert some point lies in fewer than 9 members of F union Q
+\end{verbatim}
+
+\section*{Declaration of AI-generated research and authorship}
+Jason Davies initiated the investigation, selected the sequence of
+square and near-square cases, and directed the computational work.
+AI systems working under his direction developed mathematical reductions,
+wrote enumeration and checking programs, and produced this manuscript
+draft. The programs and the scope of their checks are described above
+so that the calculations can be examined independently.
+
+\begin{thebibliography}{9}
+\bibitem{crwr}
+Alex F. Collins, Alexander W. N. Riasanovsky, John C. Wallace and
+Stanis\l aw P. Radziszowski.
+Zarankiewicz numbers and bipartite Ramsey numbers.
+\emph{Journal of Algorithms and Computation} 47 (2016), 63--78.
+\href{https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf}{Author's copy}.
+
+\bibitem{padhi}
+Jaideep Padhi.
+New exact values and improved lower bounds for Zarankiewicz numbers
+$z(m,n;3)$. Preprint, 2026.
+\href{https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6960039}{SSRN 6960039}.
+
+\bibitem{afra}
+Koyar Afrasyab. Exact Zarankiewicz values on two finite frontier slices.
+Preprint, 2026. \href{https://arxiv.org/abs/2608.08154}{arXiv:2608.08154}.
+
+\bibitem{hou}
+Shengteng Hou. Seven exact finite Zarankiewicz numbers from a single
+$13\times18$ core. Preprint, 2026.
+\href{https://arxiv.org/abs/2608.08549}{arXiv:2608.08549}.
+
+\bibitem{wei}
+Jiuzeng Wei. Computer-assisted proofs for $z(16,17)$ and $z(16,18)$. Research data, 2026.
+\href{https://doi.org/10.5281/zenodo.24553293}{Zenodo 24553293}.
+
+\bibitem{rg}
+Yaser Rowshan and Mostafa Gholami. A proof of a conjecture on Ramsey
+numbers $B(2,2,3)$. 2021.
+\href{https://arxiv.org/abs/2108.03572}{arXiv:2108.03572}.
+
+\bibitem{nauty}
+Brendan D. McKay and Adolfo Piperno.
+Practical graph isomorphism, II.
+\emph{Journal of Symbolic Computation} 60 (2014), 94--112.
+\href{https://doi.org/10.1016/j.jsc.2013.09.003}{doi:10.1016/j.jsc.2013.09.003}.
+
+\bibitem{code}
+Jason Davies. Zarankiewicz numbers. Explicit matrices, proof notes and
+verification sources, 2026. Revision \code{381a0d7}.
+\url{https://github.com/jasondavies/zarankiewicz-numbers/tree/381a0d7c62daf76949f03d2bd5908a9d5fafeb92}.
+\end{thebibliography}
+\end{document}
