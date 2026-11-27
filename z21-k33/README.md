@@ -24,6 +24,8 @@ Mark the ten columns of the chosen ten-row. Its twenty blocks have point loads e
 
 This excludes 196 unconditionally. At 195 some line has degree eight, since degree seven would leave 188 after deletion. Deleting it gives exactly 187 on 20 × 21, which is impossible. This excludes 195. At 194 a line of degree at most eight leaves at least 186. Hence if the rectangular maximum is 185 then the square maximum is exactly 193. [Exclusion of 187 on 20 × 21](../z20x21-k33/rare-rows.md)
 
+Every extremal square has at least one eight-row and one eight-column. [Proof and replay](eight-lines.md)
+
 ## Replay
 
 Run the following from this directory with Python 3.10+, C++20 and nauty installed. The square upper bound uses the rectangular upper bound, whose replay is linked above.

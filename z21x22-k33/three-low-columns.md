@@ -1,0 +1,23 @@
+# Every extremal 21 × 22 rectangle has at least three eight-columns
+
+Every admissible 21 × 21 square with 193 ones has at least two eight-rows and at least two eight-columns. Every 201-one rectangle on 21 × 22 has at least three eight-columns. Thus every hypothetical 217 on 22 × 23 can be obtained from 177 on 21 × 19 by adding three eight-columns, then either two eight-rows or an eight-row and an eight-column. All weights refer to the time of addition. The known 201-one witness has exactly three eight-columns, so the bound at 201 is sharp. [201 witness](witness-201.txt) · [Reduction from 217](../z22x23-k33/last-profile.md)
+
+## The 185-one obstruction
+
+Suppose B has 185 ones on 21 × 20, with minimum row degree seven and minimum column degree nine. By the earlier degree proof, all rows have degree at most nine, the columns are fifteen nines and five tens, and every ten meets at least three units of row deficit measured from nine. Two rows share at most five columns. Two columns share at most five rows. [Degree proof](177-parent.md#degrees-in-b)
+
+The total row deficit is four, spread over at least two rows. If every ten-column contained four units, two deficient rows would meet all five tens. The other nineteen rows could then supply at most 38 entries on those columns, while the two rows supply ten. The five tens require 50. Hence some ten-column contains exactly three units of deficit.
+
+On the ten rows of that column, the nineteen other columns give blocks of size at most five with pairwise intersections at most two. The ten point loads are at most eight and sum to 77. A five-block is necessary since nineteen fours have total only 76. Generating every family of five-blocks, then all compatible smaller blocks up to isomorphism, gives **315,583** patterns of total 77. A load floor of five suffices even without the minimum-row assumption. Outside the ten rows, the remaining deficit is exactly one. There must therefore be ten rows of degree nine and one of degree eight, all avoiding the marked column.
+
+For each pattern, the replay searches for ten distinct nine-subsets of the nineteen columns. It generates individual supports compatible with the ten fixed rows, and enforces all triple intersections between fixed and chosen rows. For each column with b fixed entries, at least 8−b newly chosen rows must use it, since the last eight-row can contribute at most one. Its total degree is at most ten. When some column still needs a row, branch on which of its available supporters occurs first in the solution. This covers every feasible selection.
+
+Further pruning uses only the same degree and intersection bounds. If two rows intersect on a set S, every other row meets S at most twice. The columns in S require at least 9|S| entries. Subtract the known entries there and allow two per unassigned row to obtain the required contribution from the next row. For two candidate rows with common set S the fixed contribution is known, the candidates contribute 2|S|, and the other nine rows contribute at most eighteen. All **315,583 patterns give zero selections** even before the last eight-row is added.
+
+Run `python3 verify_three_low_columns.py --jobs 4` from this directory with C++20, nauty and Python 3.10+. The replay first tests 100 planted selections from established witnesses, varying the count of required nine-rows and the minimum column degree separately. It regenerates the full marked catalogue and checks the obstruction at its stated parameters. [Replay](verify_three_low_columns.py) · [Search](marked_nine_rows.cpp)
+
+## Consequences
+
+A 193-one square has an eight-column. Deleting its only such column, if unique, would leave the forbidden B. Each remaining row would have degree at least seven, since every original row has degree at least eight by the 20 × 21 bound of 185. Transposition gives the second eight-row as well. A 201-one rectangle has an eight-column whose deletion gives a 193-one square. The degrees of its remaining columns are unchanged, giving at least three eight-columns before deletion. [Previous eight-line bounds](../z21-k33/eight-lines.md)
+
+In a 193-one square, the submatrix on the eight-rows and eight-columns contains no all-ones 2 × 2. Deleting those two rows and two columns would leave 165 on 19 × 19, exceeding 164. If a 201-one rectangle has minimum row degree nine, **each eight-column therefore contains at least two nine-rows**, because its deletion exposes at least two eight-rows. Also, no two nine-rows can meet three common eight-columns, since deleting one of those columns would leave a forbidden 2 × 2 on the eight-lines of the resulting square. [19 × 19 bound](../z19-k33/README.md)

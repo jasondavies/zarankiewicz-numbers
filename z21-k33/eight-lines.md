@@ -1,0 +1,15 @@
+# Every extremal 21 × 21 square has both an eight-row and an eight-column
+
+The maximum is 193. Suppose a 193-one square had every column of degree at least nine. Their excesses above nine sum to four. Every row has degree at least eight by the [20 × 21 bound of 185](../z20x21-k33/README.md). Two rows share at most five columns, as six columns need at least 54 entries while the two rows and the other nineteen can supply at most 50. The [eleven-point lemma](README.md) rules out a row of degree at least eleven: mark eleven of its entries, each with load at least eight on the remaining twenty rows. At least one row has degree ten, since 21 nines sum to 189.
+
+For a ten-row let $H$ be the sum of the excesses of its ten columns. Project the other twenty rows onto those columns. Block sizes are at most five, two blocks meet in at most two points, and the total load is $80+H$. All missing columns avoid the marked row. Two such columns cannot coincide: nine common rows would require at least $9(8-2)=54$ entries on the other nineteen columns, which can supply at most 38.
+
+* **$H\ge2$.** All point loads are between eight and twelve. The eleven missing columns have degrees nine through eleven because at most two excess units remain. There are 159 canonical projections; none completes to weight 193.
+* **$H=1$.** One point has load nine and the others eight. There are 5,487 projections. The missing columns have degrees nine through twelve. Again, none completes.
+* **All ten-rows have $H=0$.** Mark any ten-row. All ten point loads are eight. An enumeration starting with every canonical five-block family, including the empty family, gives 79,801 projections. For every row of degree $d$, write $H$ for its incident excess. The marked row maximizes $4d+H$ at 40: other ten-rows score 40 and shorter rows have $H\le4$. Complete with columns of degree at least nine, with score at most 40 on every row, minimum row degree eight and total 193. The sum of squared column excesses is between four and sixteen. Across 399,005 choices of a projection and a column degree profile, no completion exists.
+
+Thus the square has a column of degree eight, and by transposition also a row of degree eight. These need not be incident. Run `python3 ../z22x23-k33/verify_second_reduction.py 193 --jobs 6` to regenerate the projections, recover the 210-one positive control, and check the three searches. [Replay](../z22x23-k33/verify_second_reduction.py)
+
+## Consequence for 201 and 217
+
+[Every extremal 21 × 22 rectangle](../z21x22-k33/smaller-parent.md) loses eight entries on deleting one of its columns. The resulting 193-one square has an eight-column of its own. Its column degrees were unaffected by the first deletion. Hence every 201-one rectangle has at least **two** eight-columns. Deleting any two gives 185 ones on 21 × 20, the exact maximum. In the common branch of the 217 problem it suffices to classify 185-one rectangles admitting two compatible eight-columns and then test the resulting 201-one rectangles for the required final extensions. The other branch has the [single nine-and-ten square-parent profile](../z22x23-k33/last-profile.md).

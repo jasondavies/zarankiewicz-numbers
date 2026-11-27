@@ -53,7 +53,7 @@ struct LineExtensions {
         }
         return false;
     }
-    bool run(int k) {
+    bool run(int k, int weight = 7) {
         std::array<Mask, rows> incident{};
         for (size_t j = 0; j < fixed.size(); ++j)
             for (Mask s = fixed[j]; s; s &= s - 1)
@@ -63,7 +63,7 @@ struct LineExtensions {
                 for (int h = 0; h < i; ++h)
                     if (std::popcount(incident[j] & incident[i] & incident[h]) >= 2)
                         forbidden[i][h] |= 1u << j;
-        supports((1u << rows) - 1, 0, 7);
+        supports((1u << rows) - 1, 0, weight);
         return choose(allowed, k);
     }
 };

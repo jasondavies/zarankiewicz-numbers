@@ -11,9 +11,9 @@ using Blocks = std::vector<unsigned>;
 
 inline Blocks canonical_blocks(int points, const Blocks& blocks) {
     int n = points + blocks.size();
-    if (n > 32 || n > WORDSIZE) throw std::logic_error("graph exceeds one nauty word");
-    graph g[32]{}, canonical[32]{};
-    int lab[32], partition[32], orbits[32];
+    if (n > WORDSIZE) throw std::logic_error("graph exceeds one nauty word");
+    graph g[WORDSIZE]{}, canonical[WORDSIZE]{};
+    int lab[WORDSIZE], partition[WORDSIZE], orbits[WORDSIZE];
     for (int i = 0; i < n; ++i) {
         lab[i] = i;
         partition[i] = (i != points - 1 && i != n - 1);

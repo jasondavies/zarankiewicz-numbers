@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
     int points = std::stoi(argv[1]), minimum = std::stoi(argv[2]);
     const int lines = argc == 5 ? std::stoi(argv[3]) : 17;
     const int min_load = argc == 5 ? std::stoi(argv[4]) : 7;
-    if (points < 2 || points > max_points || lines < 1 || lines > 20 ||
+    if (points < 2 || points > max_points || lines < 1 || lines > 22 || points + lines > 32 ||
         min_load < 0 || min_load > lines || minimum < 0 || minimum > 5 * lines)
         return 2;
     std::array<Blocks, 6> pool;

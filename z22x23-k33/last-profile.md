@@ -1,0 +1,20 @@
+# Excluding both minimum-degree-nine square-parent profiles
+
+Let a 217-one rectangle have an eight-column whose deletion leaves a 209-one square with all line degrees at least nine. The square must have **eleven nines and eleven tens on each side**.
+
+The [first profile reduction](square-parent.md) left one other possibility: twelve nines, nine tens and an eleven, on each side. Moreover the eleven-row meets exactly one ten-column and ten nine-columns. Mark this entire row. On the 21 other rows its eleven points have ten loads of eight and one load of nine. Blocks have size at most five and intersect pairwise in at most two points. A projection of load at least 89 needs at least five blocks of size five. Enumerating from all such five-block families, with point loads between eight and nine, gives 36,420 projections, of which 36,171 have total load exactly 89.
+
+For a row of degree $d$ let $H$ be the sum of incident column excesses above nine. The parent bounds are $H\le7,4,1$ for row degrees nine, ten and eleven respectively. Hence **$3d+H\le34$ on every row**, with equality on the marked row. The column excess sum is eleven and its sum of squares is thirteen. Complete the projection with eleven distinct columns avoiding the mark, all of degree at least nine, enforcing those two sums, the score bound and minimum row degree nine. All 36,171 searches return zero completions. A positive control at weight 210 recovers a full extremal square with the same enumerator. Run `python3 verify_second_reduction.py 209 --jobs 6` from this directory. [Replay](verify_second_reduction.py)
+
+## Forced mark in the remaining profile
+
+Now all lines have degree nine or ten. Some ten-row meets exactly four ten-columns. Otherwise the eleven ten-rows meet at most 33 ten-columns counted with multiplicity, out of 110 total incidences. The eleven nine-rows can contribute at most 77 by the row bound, so each must meet exactly seven of the eleven ten-columns. They would cover $11\binom{7}{3}=385$ triples of ten-columns, exceeding the capacity $2\binom{11}{3}=330$. The argument applies to the transpose as well.
+
+The ten marked points therefore have six loads of eight and four loads of nine on the other 21 rows. Enumerating point loads eight to nine and total at least 84 gives 786,700 projections, including 780,162 of total exactly 84. The marked row again maximizes $3d+H$ at 34. The column excess sum and sum of squares are both eleven. These conditions give a finite search in a single orientation; every completion of the required profile can be tested directly for an extra eight-column. 
+## Completing the nine-and-ten profile
+
+The marked row contains four of the eleven ten-columns. Each of the seven others is a ten-subset of the 21 outside rows. Generate each support that respects the triple constraints with every pair of marked columns. Two columns can share at most five rows, since six rows need at least 54 entries and two columns covering them allow at most 52. Join two candidate supports when their common part has size at most five and meets every fixed column in at most two points. Find sets of seven joined candidates, also testing every triple of chosen supports against the two-point bound. All seven must be distinct by the pair bound.
+
+Only **34 of the 780,162** projections pass this necessary test. Completing each from its original ten marked columns, with minimum row and column degree nine, total 209, squared column excess eleven and score bound 34, gives **zero squares**. The verifier also recovers an explicit compatible seven-column placement and checks every triple of the resulting seventeen columns. Run `python3 verify_second_reduction.py balanced --jobs 6` to reproduce the search. [Seven-column search](seven_tens.cpp) · [Replay](verify_second_reduction.py)
+
+Consequently the 209-one square obtained by deleting a unique eight-column from a 217-one rectangle must have an eight-row. Both the one- and two-column branches pass through an extremal 201-one rectangle, and hence through an extremal 185-one rectangle. [Shared reduction](../z21-k33/eight-lines.md)

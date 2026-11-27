@@ -6,7 +6,7 @@
 int main(int argc, char** argv) {
     if (argc != 3) return 2;
     int points = std::stoi(argv[1]);
-    if (points < 10 || points > 11) return 2;
+    if (points < 9 || points > 11) return 2;
     if (std::string(argv[2]) == "unique") {
         std::set<Blocks> seen;
         std::string line;
@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
         return 0;
     }
     int first = std::stoi(argv[2]);
-    if (points < 10 || points > 11 || first < 1) return 2;
+    if (points < 9 || points > 11 || first < 1) return 2;
     Blocks pool;
     for (unsigned b = 0; b < (1u << points); ++b)
         if (std::popcount(b) == 5) pool.push_back(b);

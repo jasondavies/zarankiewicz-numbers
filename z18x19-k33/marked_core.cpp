@@ -7,16 +7,17 @@ struct MarkedCoreSearch {
     static constexpr int outside = rows - 1;
     int min_squares = 0, max_squares = 10000;
     int width = 19, minimum_degree = 0;
-    bool emit_cores = false;
+    bool emit_cores = false, all_cores = false;
     // Optional requirement for a row of core degree eight meeting this much column excess.
     int eight_excess = -1, marked_excess = 0;
+    int column_floor = 8;
     int k, m, t, total, peak, remaining_excess, missing, excess, score_without_squares;
     std::array<int, outside> capacity{}, degrees{};
     Lines fixed;
     std::array<std::array<Mask, outside>, outside> forbidden_triples{};
     std::array<Lines, rows> options;
     std::vector<int> weights;
-    std::array<int, 21> future_weight{};
+    std::array<int, 23> future_weight{};
     int unused_capacity = 0, multiplier = 1;
     std::array<unsigned char, 1u << outside> pair_cache{};
     bool compatible_pair(Mask both) {
@@ -44,11 +45,11 @@ struct MarkedCoreSearch {
     // Allowed column supports on the rows outside the mark. Each two old
     // columns have already reserved their common row triples.
     void generate_supports(Mask rest, Mask chosen, int n, int high) {
-        if (n >= 8)
+        if (n >= column_floor)
             options[n].push_back(chosen);
         if (n >= high)
             return;
-        while (std::popcount(rest) + n >= 8 && rest) {
+        while (std::popcount(rest) + n >= column_floor && rest) {
             Mask bit = rest & -rest;
             rest ^= bit;
             Mask next = rest;
@@ -74,6 +75,7 @@ struct MarkedCoreSearch {
             for (auto x : fixed) std::cout << ' ' << x;
             std::cout << '\n';
         }
+        if (all_cores) return false;
         LineExtensions<rows> ext;
         ext.fixed = fixed;
         if (!ext.run(k))
@@ -90,7 +92,7 @@ struct MarkedCoreSearch {
         if (at == (int)weights.size())
             return extend_core();
         const Lines &pool = pools[weights[at]];
-        int d = weights[at], coeff = d - 8 + multiplier;
+        int d = weights[at], coeff = d - column_floor + multiplier;
         Mask allow = 0, must = 0;
         const int slots = int(weights.size()) - at;
         const bool uniform = d == weights.back();
@@ -100,7 +102,7 @@ struct MarkedCoreSearch {
         };
         const int step = uniform ? coeff : 1;
         const int next_step = slots == 1 || weights[at + 1] != weights.back()
-            ? 1 : weights.back() - 8 + multiplier;
+            ? 1 : weights.back() - column_floor + multiplier;
         int inevitable = 0;
         for (int j = 0; j < outside; ++j) {
             if (capacity[j] >= coeff) allow |= 1u << j;
@@ -158,7 +160,7 @@ struct MarkedCoreSearch {
                 const auto &old = pools[weights[h]];
                 auto &out = next[weights[h]];
                 Mask permitted = 0;
-                const int coefficient = weights[h] - 8 + multiplier;
+                const int coefficient = weights[h] - column_floor + multiplier;
                 for (int bit = 0; bit < outside; ++bit)
                     if (capacity[bit] - int((a >> bit) & 1u) * coeff >= coefficient)
                         permitted |= 1u << bit;
@@ -195,7 +197,7 @@ struct MarkedCoreSearch {
         }
         return false;
     }
-    // Partition the remaining excess into nonincreasing column degrees minus eight.
+    // Partition the remaining excess into nonincreasing column degrees minus the column floor.
     bool try_degree_profile(int left, int extra, int high, int sq) {
         if (score_without_squares + sq + extra > rows * peak || sq + extra > max_squares)
             return false;
@@ -207,7 +209,7 @@ struct MarkedCoreSearch {
             std::array<Lines, rows> pools;
             for (int j = int(weights.size()) - 1; j >= 0; --j) {
                 int d = weights[j];
-                future_weight[j] = future_weight[j + 1] + d - 8 + multiplier;
+                future_weight[j] = future_weight[j + 1] + d - column_floor + multiplier;
                 if (options[d].empty())
                     return false;
                 if (j + 1 == int(weights.size()) || d != weights[j + 1])
@@ -215,8 +217,8 @@ struct MarkedCoreSearch {
             }
             return choose_columns(0, pools);
         }
-        for (int e = std::min({high, extra, outside - 8}); e * left >= extra; --e) {
-            weights.push_back(8 + e);
+        for (int e = std::min({high, extra, outside - column_floor}); e * left >= extra; --e) {
+            weights.push_back(column_floor + e);
             if (try_degree_profile(left - 1, extra - e, e, sq + e * e))
                 return true;
             weights.pop_back();
@@ -231,8 +233,8 @@ struct MarkedCoreSearch {
         if (t < minimum_degree) return false;
         total = goal - 7 * k;
         missing = m - t;
-        excess = total - 8 * m;
-        score_without_squares = multiplier * total + 8 * excess;
+        excess = total - column_floor * m;
+        score_without_squares = multiplier * total + column_floor * excess;
         fixed.assign(t, 1u << outside);
         std::array<int, rows> coefficients{};
         for (int j = 0; j < outside; ++j)
@@ -240,7 +242,7 @@ struct MarkedCoreSearch {
                 fixed[std::countr_zero(s)] |= 1u << j;
         int accumulated = 0, sq = 0;
         for (int i = 0; i < t; ++i) {
-            int e = std::popcount(fixed[i]) - 8;
+            int e = std::popcount(fixed[i]) - column_floor;
             if (e < 0)
                 return false;
             accumulated += e;
@@ -270,12 +272,14 @@ struct MarkedCoreSearch {
                         forbidden_triples[i][h] |= 1u << j;
             }
         if (missing)
-            generate_supports((1u << outside) - 1, 0, 0, std::min(outside, 8 + remaining_excess));
-        return try_degree_profile(missing, remaining_excess, outside - 8, sq);
+            generate_supports((1u << outside) - 1, 0, 0, std::min(outside, column_floor + remaining_excess));
+        return try_degree_profile(missing, remaining_excess, outside - column_floor, sq);
     }
 };
 template<int rows>
 int search(int argc, char **argv, int k, int t, int target, int alpha, int width) {
+    const std::string output = argc == 12 ? argv[11] : "";
+    const bool all_cores = output == "--all-cores" || output == "--nine-column-cores";
     std::string line;
     unsigned long long n = 0, c = 0, p = 0;
     while (std::getline(std::cin, line)) {
@@ -293,6 +297,8 @@ int search(int argc, char **argv, int k, int t, int target, int alpha, int width
         if (argc >= 10) check.minimum_degree = std::stoi(argv[9]);
         if (argc >= 11) check.eight_excess = std::stoi(argv[10]);
         check.emit_cores = argc == 12;
+        check.all_cores = all_cores;
+        if (output == "--nine-column-cores") check.column_floor = 9;
         if (check.minimum_degree < 0 || check.minimum_degree > width ||
             check.eight_excess < -1) return 2;
         if (argc >= 7) {
@@ -305,26 +311,33 @@ int search(int argc, char **argv, int k, int t, int target, int alpha, int width
         c += check.cores;
         p += check.profiles_checked;
     }
-    std::cout << "excluded " << n << " cores " << c << " profiles " << p << '\n';
+    std::cout << (all_cores ? "enumerated " : "excluded ") << n << " cores " << c << " profiles " << p << '\n';
     return 0;
 }
 
 int main(int argc, char **argv) {
     if (argc < 3 || argc > 12 || argc == 6)
         return 2;
-    if (argc == 12 && std::string(argv[11]) != "--emit-cores") return 2;
+    if (argc == 12 && std::string(argv[11]) != "--emit-cores" &&
+        !((std::string(argv[11]) == "--all-cores" || std::string(argv[11]) == "--nine-column-cores") && std::stoi(argv[1]) == 0)) return 2;
     int k = std::stoi(argv[1]), t = std::stoi(argv[2]);
     const int width = argc >= 8 ? std::stoi(argv[7]) : 19;
-    if ((width < 19 || width > 21) || k < 0 || k > width - 10 || t < 2 || t > 12)
+    if ((width < 19 || width > 22) || k < 0 || k > width - 10 || t < 2 || t > 12)
         return 2;
     const int target = argc >= 4 ? std::stoi(argv[3]) : 157;
     const int alpha = argc >= 5 ? std::stoi(argv[4]) : 1;
-    if (alpha < 1 || alpha > 2)
+    if (alpha < 1 || alpha > 6)
         return 2;
     // Optional trailing arguments are row count, minimum core row degree, and
     // required excess on some eight-row. The original 18-row invocation is the default.
     if (argc >= 9) {
         const int rows = std::stoi(argv[8]);
+        if (rows == 22)
+            return search<22>(argc, argv, k, t, target, alpha, width);
+        if (rows == 21)
+            return search<21>(argc, argv, k, t, target, alpha, width);
+        if (rows == 20)
+            return search<20>(argc, argv, k, t, target, alpha, width);
         if (rows == 19)
             return search<19>(argc, argv, k, t, target, alpha, width);
         if (rows != 18) return 2;

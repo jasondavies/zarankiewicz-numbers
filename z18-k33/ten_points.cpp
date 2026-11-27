@@ -1,4 +1,4 @@
-// Enumerate block multisets on ten or eleven points with a prescribed total-size floor and load range.
+// Enumerate block multisets on nine to eleven points with a prescribed total-size floor and load range.
 #include "../z16x18-k33/block_families.hpp"
 #include <array>
 #include <iostream>
@@ -106,9 +106,10 @@ int main(int argc, char** argv) {
         minimum_load = std::stoi(argv[4]);
     }
     if (argc == 6) points = std::stoi(argv[5]);
-    if (points < 10 || points > max_points) return 2;
-    // The input consists of nonempty five-block families. The total must force one.
-    if (block_count < 1 || block_count > 20 || minimum_total <= 4*block_count ||
+    if (points < 9 || points > max_points) return 2;
+    // At or below total 4*block_count the caller must include a blank line for the empty five-block family.
+    if (block_count < 1 || block_count > 22 || points + block_count > WORDSIZE ||
+        minimum_total < 3*block_count ||
         minimum_total > 5*block_count || minimum_load < 0 ||
         maximum_load < minimum_load || maximum_load > block_count) return 2;
     for (unsigned b=0; b<(1u<<points); ++b) if (std::popcount(b)<=5) by_size[std::popcount(b)].push_back(b);
