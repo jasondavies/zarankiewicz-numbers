@@ -642,8 +642,12 @@ The directory's proof index records the separate verifications on
 which the degree restrictions depend. The final proof of
 $z(21,23)\le208$ uses incidence counts, so the large DRAT archives for
 the earlier individual four-column case are unnecessary for
-Theorem~\ref{thm:main}. Replays use Python 3.10 or later, a C++20
-compiler and nauty. These are program-checked finite searches. Their
+Theorem~\ref{thm:main}. Run the Python drivers with assertions enabled
+(omit \code{-O} and \code{-OO} and leave \code{PYTHONOPTIMIZE} unset).
+The native replays use Python 3.10 or later, a C++20 compiler and 64-bit
+nauty. The degree-profile replay for the three-eight-column case also uses
+OR-Tools, SciPy and NumPy. It certifies 298 exclusions among 302 profile
+pairs. These are program-checked finite searches. Their
 correctness depends on the coverage arguments, the enumerators and the
 completion routines.
 

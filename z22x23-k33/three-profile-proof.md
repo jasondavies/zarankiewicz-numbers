@@ -34,6 +34,8 @@ Choose which four of the 21 unmarked columns are the remaining eight-columns. Ea
 
 Finally the search over the 14,736 maximizing ten-row projections of load 78, with minimum core row degree nine and $Q\le31$, gives **zero cores**. This excludes the three-eight-column case. The profile and column replays together perform all the checks, including a reconstructed 185-one positive control.
 
+Install the [profile replay dependencies](../README.md#replaying-the-proofs) first. From this directory with the environment active, the first command checks all 302 degree-profile pairs and certifies 298 exclusions. The second checks the column cases.
+
 ```sh
 python3 verify_three_profiles.py
 python3 verify_three_columns.py --jobs 4 --cache /tmp/z193-three

@@ -67,6 +67,6 @@ if __name__ == '__main__':
     parser = ArgumentParser(description=__doc__)
     parser.add_argument('--jobs', type=int, default=1)
     args = parser.parse_args()
-    if args.jobs < 1:
-        parser.error('jobs must be positive')
+    if not __debug__ or args.jobs < 1:
+        parser.error('enable assertions and choose a positive job count')
     main(args.jobs)

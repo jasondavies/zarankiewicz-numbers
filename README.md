@@ -27,7 +27,7 @@ The consolidated paper covers the seven consecutive square maxima from 17 × 17 
 | $z(22,23;3,3) = 216$ | [`z22x23-k33`](z22x23-k33) | Witness and exhaustion excluding 217 |
 | $z(23,23;3,3) = 225$ | [`z23-k33`](z23-k33) | Witness and a row-deletion bound from the 22 × 23 value |
 
-Before this work the best published upper bounds for 17 × 17, 17 × 18 and 18 × 18 were 141, 148 and 156 ([Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf)). The 17 × 18 proof uses the 17 × 17 value, the 18 × 18 proof uses the 17 × 18 value, and the 18 × 19 proof uses both of those. The 19 × 19 bound then follows from the 18 × 19 value by deleting rows. The 19 × 20 proof uses the 18 × 19 and 19 × 19 values. The 20 × 20 bound then follows from the 19 × 20 value by deleting rows. The 19 × 21 proof uses the 18 × 19 and 19 × 20 values together with new bounds of 163 on 18 × 20 and 170 on 18 × 21. The 20 × 21 and 21 × 21 proofs show that a heavier matrix would have one or two parallel lines of degree eight, whose deletion would leave 178 ones on 19 × 21. The 21 × 22 proof uses the 20 × 21 and 21 × 21 values, and the 22 × 22 bound follows from the 21 × 22 value by deleting rows. The 22 × 23 proof uses the 21 × 22 value, through an upper bound of 209 on 21 × 23, and the uniqueness of the extremal 22 × 22 square. The 23 × 23 bound then follows from the 22 × 23 value by deleting rows. The 17 × 17 value also gives a short proof that the bipartite Ramsey number $b(2,2,3)$ is 17, first proved by [Rowshan and Gholami](https://arxiv.org/abs/2108.03572).
+Before this work the best published upper bounds for 17 × 17, 17 × 18 and 18 × 18 were 141, 148 and 156 ([Collins et al., Table 4](https://www.cs.rit.edu/~spr/PUBL/crwr16.pdf)). The 17 × 18 proof uses the 17 × 17 value, the 18 × 18 proof uses the 17 × 18 value, and the 18 × 19 proof uses both of those. The 19 × 19 bound then follows from the 18 × 19 value by deleting rows. The 19 × 20 proof uses the 18 × 19 and 19 × 19 values. The 20 × 20 bound then follows from the 19 × 20 value by deleting rows. The 19 × 21 proof uses the 18 × 19 and 19 × 20 values together with new bounds of 163 on 18 × 20 and 170 on 18 × 21. The 20 × 21 and 21 × 21 proofs show that a heavier matrix would have one or two parallel lines of degree eight, whose deletion would leave 178 ones on 19 × 21. The 21 × 22 proof uses the 20 × 21 and 21 × 21 values, and the 22 × 22 bound follows from the 21 × 22 value by deleting rows. The 22 × 23 proof uses the 21 × 22 value, through the [upper bound of 208 on 21 × 23](z21x23-k33/no-209.md), which forces every row of a 217-one rectangle to have degree at least nine, and the uniqueness of the extremal 22 × 22 square. The 23 × 23 bound then follows from the 22 × 23 value by deleting rows. The 17 × 17 value also gives a short proof that the bipartite Ramsey number $b(2,2,3)$ is 17, first proved by [Rowshan and Gholami](https://arxiv.org/abs/2108.03572).
 
 Three of the first five witnesses extend an earlier matrix by one line, outlined.
 
@@ -75,7 +75,20 @@ Each result has its own directory with a README describing the files and how to 
 - a written proof, in the README or in Markdown files, often with a typeset PDF;
 - the verification sources and a `verify_exact.py` script that replays the whole check.
 
-The replays need Python 3.10 or newer, a C++20 compiler available as `c++`, and the nauty headers and library. If nauty is not on the compiler's default search paths, as with Homebrew on Apple Silicon, pass them through `CXXFLAGS` and `LDFLAGS`:
+## Replaying the proofs
+
+Use Python with assertions enabled (omit `-O` and `-OO` and leave `PYTHONOPTIMIZE` unset). The native searches require Python 3.10 or later, a C++20 compiler available as `c++`, and the 64-bit nauty headers and library. For the full proof through order 23, the degree-profile calculation also uses OR-Tools, SciPy and NumPy. From the repository root, the following installs the tested direct dependencies in a fresh Python 3.12 environment and runs that calculation.
+
+```sh
+python3.12 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r requirements-replay.txt
+python z22x23-k33/verify_three_profiles.py
+```
+
+The expected result is 298 certified exclusions out of 302 profile pairs, leaving four. The [three-column proof](z22x23-k33/three-profile-proof.md) describes the remaining checks. The historical [SAT replay](z21x23-k33/start4.md) separately uses python-sat and drat-trim. The optional [parent crop check](z21x23-k33/parent-extensions.md) uses NetworkX.
+
+If nauty is not on the compiler's default search paths, as with Homebrew on Apple Silicon, pass them through `CXXFLAGS` and `LDFLAGS`:
 
 ```sh
 CXXFLAGS=-I/opt/homebrew/include LDFLAGS=-L/opt/homebrew/lib python3 verify_exact.py
